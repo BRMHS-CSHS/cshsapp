@@ -13,9 +13,6 @@ export default function Home() {
 
   return (
     <main>
-        <nav className="w-full h-14 bg-slate-300 shadow-xl">
-            <Link className="" href="/"><Button props="User" ></Button></Link>
-        </nav>
         <div className="my-5 flex flex-col items-center justify-center font-mono">
         <h1 className="text-lg font-bold tracking-wider">Admin Login</h1>
         <form action={handleSubmit} className="">

@@ -1,7 +1,6 @@
 "use client"
-import Navbar from "../components/navbar"
 import {useRouter} from "next/navigation"
-import { getData, loginCreds } from "@/actions/auth";
+import { loginCreds } from "@/actions/auth";
 
 export default function Home() {
   const router = useRouter(); 
@@ -14,7 +13,6 @@ export default function Home() {
 
   return (
     <main>
-      <Navbar/>
       <div className="my-5 flex flex-col items-center justify-center font-mono">
 
         <h1 className="font-bold text-lg tracking-wider"> 
