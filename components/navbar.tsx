@@ -11,8 +11,10 @@ const handleClick = async () =>
       logout();
     }
 
+
 const Navbar = () =>
     {
+      const user = null // wip
       const path = usePathname(); 
       let prop, link : any, click; 
       switch(path)
@@ -20,7 +22,6 @@ const Navbar = () =>
         case "/":
           prop = "Admin"
           link = "/admin"
-          console.log(prop)
           break;
         case "/admin":
           prop = "User"
@@ -29,6 +30,7 @@ const Navbar = () =>
         case "/admin/dashboard":
           prop = "Sign-out"
           link = "/admin"
+          click = handleClick
           break;
         case "/dashboard":
           prop = "Sign-Out"
@@ -39,10 +41,12 @@ const Navbar = () =>
           prop = ""
           link = ""
       }
-
       return (
         <nav className="w-full h-14 bg-slate-300 shadow-xl">
-          <Link href={link} onClick={click}><Button props={prop}></Button></Link>
+          <div className="grid grid-cols-3">
+            <Link href={link} onClick={click}><Button props={prop}></Button></Link>
+            <div className="flex justify-center items-center">{user}</div>
+          </div>
         </nav>
       )
     }
