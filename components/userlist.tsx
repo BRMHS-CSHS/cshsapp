@@ -25,7 +25,7 @@ import {VerticalDotsIcon} from "./userlistcomps/VerticalDotsIcon";
 import {ChevronDownIcon} from "./userlistcomps/ChevronDownIcon";
 import {SearchIcon} from "./userlistcomps/SearchIcon";
 import {columns, users, statusOptions} from "./userlistcomps/data/data";
-import {capitalize} from "@/utils/capialize";
+import {capitalize} from "@/utils/capitalize";
 import Popup from "reactjs-popup"
 import RegisterPage from "./register";
 
