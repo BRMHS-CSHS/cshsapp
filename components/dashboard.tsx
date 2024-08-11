@@ -4,7 +4,7 @@ import { auth } from "@/auth";
 
 const Dashboard = async () =>
     {
-        const user = (await auth())?.user
+        const user : any = (await auth())?.user
 
         return (
             <div className="font-mono box-border h-72 w-96 p-4 border-4 border-slate-700 bg-slate-400">
