@@ -1,13 +1,18 @@
-import NextAuth from "next-auth"
-import { PrismaAdapter } from "@auth/prisma-adapter"
-import Credentials from "next-auth/providers/credentials"
-import bcrypt from "bcryptjs"
-import { db } from "./db"
-import { saltAndHashPassword } from "./utils/helper"
+import NextAuth from "next-auth";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import Credentials from "next-auth/providers/credentials";
+import bcrypt from "bcryptjs";
+import { db } from "./db";
+import { saltAndHashPassword } from "./utils/helper";
 
-export const { handlers: {GET, POST}, signIn, signOut, auth } = NextAuth({
+export const {
+  handlers: { GET, POST },
+  signIn,
+  signOut,
+  auth,
+} = NextAuth({
   adapter: PrismaAdapter(db),
-  session: { strategy : "jwt" },
+  session: { strategy: "jwt" },
   callbacks: {
     async session({ session, token }: { session: any; token: any }) {
       if (token) {
@@ -17,7 +22,7 @@ export const { handlers: {GET, POST}, signIn, signOut, auth } = NextAuth({
       }
       return session;
     },
-    async jwt({ token, user }: {token: any; user: any}) {
+    async jwt({ token, user }: { token: any; user: any }) {
       if (user) {
         token.email = user.email;
         token.name = user.name;
@@ -28,25 +33,25 @@ export const { handlers: {GET, POST}, signIn, signOut, auth } = NextAuth({
   },
   providers: [
     Credentials({
-      id:"credentials",
+      id: "credentials",
       name: "Credentials",
       credentials: {
         email: { label: "Email", type: "email" },
-        password: {label: "Password", type: "password" },
-        role: { label: "Role", type: "role" }
+        password: { label: "Password", type: "password" },
+        role: { label: "Role", type: "role" },
       },
       authorize: async (credentials) => {
-        if(!credentials || !credentials.email || !credentials.password) return null; 
+        if (!credentials || !credentials.email || !credentials.password)
+          return null;
 
         const email = credentials.email as string;
-        const hash = saltAndHashPassword(credentials.password as string); 
+        const hash = saltAndHashPassword(credentials.password as string);
 
         let user: any = await db.user.findUnique({
           where: {
-            email
-          }
-        })
-
+            email,
+          },
+        });
 
         const isMatch = bcrypt.compareSync(
           credentials.password as string,
@@ -57,24 +62,29 @@ export const { handlers: {GET, POST}, signIn, signOut, auth } = NextAuth({
         }
 
         return user;
-      }
+      },
     }),
     Credentials({
       id: "admin",
       name: "Credentials",
       credentials: {
         email: { label: "Email", type: "email" },
-        password: {label: "Password", type: "password" },
+        password: { label: "Password", type: "password" },
       },
-      authorize: (credentials : any) => {
-        if(!credentials || !credentials.email || !credentials.password) return null; 
+      authorize: (credentials: any) => {
+        if (!credentials || !credentials.email || !credentials.password)
+          return null;
 
         const email = credentials.email as string;
         const password = credentials.password as string;
 
-        if(email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) return credentials; 
-        return null; 
-      }
-    })
-  ]
-})
+        if (
+          email === process.env.ADMIN_EMAIL &&
+          password === process.env.ADMIN_PASSWORD
+        )
+          return credentials;
+        return null;
+      },
+    }),
+  ],
+});

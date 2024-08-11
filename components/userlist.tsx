@@ -1,4 +1,4 @@
-import React, {use} from "react";
+import React, { use } from "react";
 import {
   Table,
   TableHeader,
@@ -7,26 +7,26 @@ import {
   TableRow,
   TableCell,
   Selection,
-  SortDescriptor
+  SortDescriptor,
 } from "@nextui-org/table";
 import {
   DropdownTrigger,
   Dropdown,
   DropdownMenu,
   DropdownItem,
-} from "@nextui-org/dropdown"
-import {User} from "@nextui-org/user"
-import {Input} from "@nextui-org/input"
-import {Chip, ChipProps} from "@nextui-org/chip"
-import {Button} from "@nextui-org/button"
-import {Pagination} from "@nextui-org/pagination"
-import {PlusIcon} from "./userlistcomps/PlusIcon";
-import {VerticalDotsIcon} from "./userlistcomps/VerticalDotsIcon";
-import {ChevronDownIcon} from "./userlistcomps/ChevronDownIcon";
-import {SearchIcon} from "./userlistcomps/SearchIcon";
-import {columns, users, statusOptions} from "./userlistcomps/data/data";
-import {capitalize} from "@/utils/capitalize";
-import Popup from "reactjs-popup"
+} from "@nextui-org/dropdown";
+import { User } from "@nextui-org/user";
+import { Input } from "@nextui-org/input";
+import { Chip, ChipProps } from "@nextui-org/chip";
+import { Button } from "@nextui-org/button";
+import { Pagination } from "@nextui-org/pagination";
+import { PlusIcon } from "./userlistcomps/PlusIcon";
+import { VerticalDotsIcon } from "./userlistcomps/VerticalDotsIcon";
+import { ChevronDownIcon } from "./userlistcomps/ChevronDownIcon";
+import { SearchIcon } from "./userlistcomps/SearchIcon";
+import { columns, users, statusOptions } from "./userlistcomps/data/data";
+import { capitalize } from "@/utils/capitalize";
+import Popup from "reactjs-popup";
 import RegisterPage from "./register";
 
 const statusColorMap: Record<string, ChipProps["color"]> = {
@@ -37,13 +37,17 @@ const statusColorMap: Record<string, ChipProps["color"]> = {
 
 const INITIAL_VISIBLE_COLUMNS = ["name", "role", "hours", "actions"];
 
-type User = typeof users[0];
+type User = (typeof users)[0];
 
 const Userlist = () => {
-  const [visibleRegister, setVisibleRegister] = React.useState(false)
+  const [visibleRegister, setVisibleRegister] = React.useState(false);
   const [filterValue, setFilterValue] = React.useState("");
-  const [selectedKeys, setSelectedKeys] = React.useState<Selection>(new Set([]));
-  const [visibleColumns, setVisibleColumns] = React.useState<Selection>(new Set(INITIAL_VISIBLE_COLUMNS));
+  const [selectedKeys, setSelectedKeys] = React.useState<Selection>(
+    new Set([])
+  );
+  const [visibleColumns, setVisibleColumns] = React.useState<Selection>(
+    new Set(INITIAL_VISIBLE_COLUMNS)
+  );
   const [statusFilter, setStatusFilter] = React.useState<Selection>("all");
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [sortDescriptor, setSortDescriptor] = React.useState<SortDescriptor>({
@@ -60,7 +64,9 @@ const Userlist = () => {
   const headerColumns = React.useMemo(() => {
     if (visibleColumns === "all") return columns;
 
-    return columns.filter((column) => Array.from(visibleColumns).includes(column.uid));
+    return columns.filter((column) =>
+      Array.from(visibleColumns).includes(column.uid)
+    );
   }, [visibleColumns]);
 
   const filteredItems = React.useMemo(() => {
@@ -68,12 +74,15 @@ const Userlist = () => {
 
     if (hasSearchFilter) {
       filteredUsers = filteredUsers.filter((user) =>
-        user.name.toLowerCase().includes(filterValue.toLowerCase()),
+        user.name.toLowerCase().includes(filterValue.toLowerCase())
       );
     }
-    if (statusFilter !== "all" && Array.from(statusFilter).length !== statusOptions.length) {
+    if (
+      statusFilter !== "all" &&
+      Array.from(statusFilter).length !== statusOptions.length
+    ) {
       filteredUsers = filteredUsers.filter((user) =>
-        Array.from(statusFilter).includes(user.status),
+        Array.from(statusFilter).includes(user.status)
       );
     }
 
@@ -118,7 +127,9 @@ const Userlist = () => {
         return (
           <div className="flex flex-col">
             <p className="text-bold text-small capitalize">{cellValue}</p>
-            <p className="text-bold text-tiny capitalize text-default-500">{user.team}</p>
+            <p className="text-bold text-tiny capitalize text-default-500">
+              {user.team}
+            </p>
           </div>
         );
       case "hours":
@@ -153,12 +164,14 @@ const Userlist = () => {
         return cellValue;
     }
   }, []);
-  
 
-  const onRowsPerPageChange = React.useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
-    setRowsPerPage(Number(e.target.value));
-    setPage(1);
-  }, []);
+  const onRowsPerPageChange = React.useCallback(
+    (e: React.ChangeEvent<HTMLSelectElement>) => {
+      setRowsPerPage(Number(e.target.value));
+      setPage(1);
+    },
+    []
+  );
 
   const onSearchChange = React.useCallback((value?: string) => {
     if (value) {
@@ -170,7 +183,6 @@ const Userlist = () => {
   }, []);
 
   const topContent = React.useMemo(() => {
-
     return (
       <div className="flex flex-col gap-4">
         <div className="flex justify-between gap-3 items-end">
@@ -239,25 +251,30 @@ const Userlist = () => {
                 ))}
               </DropdownMenu>
             </Dropdown>
-            <Popup modal trigger={
-              <Button
-              className="bg-foreground text-background"
-              endContent={<PlusIcon />}
-              size="sm"
+            <Popup
+              modal
+              trigger={
+                <Button
+                  className="bg-foreground text-background"
+                  endContent={<PlusIcon />}
+                  size="sm"
+                >
+                  Add New
+                </Button>
+              }
             >
-              Add New
-            </Button>
-            }>
-              {(close : any) => (
+              {(close: any) => (
                 <div>
-                  <RegisterPage/>
+                  <RegisterPage />
                 </div>
               )}
             </Popup>
           </div>
         </div>
         <div className="flex justify-between items-center">
-          <span className="text-default-400 text-small">Total {users.length} users</span>
+          <span className="text-default-400 text-small">
+            Total {users.length} users
+          </span>
           <label className="flex items-center text-default-400 text-small">
             Rows per page:
             <select
@@ -322,7 +339,7 @@ const Userlist = () => {
         "group-data-[last=true]:last:before:rounded-none",
       ],
     }),
-    [],
+    []
   );
 
   return (
@@ -335,7 +352,8 @@ const Userlist = () => {
         bottomContentPlacement="outside"
         checkboxesProps={{
           classNames: {
-            wrapper: "after:bg-foreground after:text-background text-background",
+            wrapper:
+              "after:bg-foreground after:text-background text-background",
           },
         }}
         classNames={classNames}
@@ -361,13 +379,15 @@ const Userlist = () => {
         <TableBody emptyContent={"No users found"} items={sortedItems}>
           {(item) => (
             <TableRow key={item.id}>
-              {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
+              {(columnKey) => (
+                <TableCell>{renderCell(item, columnKey)}</TableCell>
+              )}
             </TableRow>
           )}
         </TableBody>
       </Table>
     </div>
   );
-}
+};
 
 export default Userlist;
