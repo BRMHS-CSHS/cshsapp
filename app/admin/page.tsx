@@ -2,6 +2,7 @@
 import Link from "next/link";
 import Button from "../../components/button";
 import { loginCreds_ADMIN } from "@/actions/auth";
+import Navbar from "@/components/navbar/navbar";
 
 export default function Home() {
   const handleSubmit = async (e: any) => {
@@ -11,6 +12,7 @@ export default function Home() {
 
   return (
     <main>
+      <Navbar/>
       <div className="my-5 flex flex-col items-center justify-center font-mono">
         <h1 className="text-lg font-bold tracking-wider">Admin Login</h1>
         <form action={handleSubmit} className="">

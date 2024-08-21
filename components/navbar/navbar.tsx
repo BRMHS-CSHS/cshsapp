@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import Button from "./button";
+import Button from "../button";
 import { usePathname } from "next/navigation";
 import { logout } from "@/actions/auth";
 
@@ -38,7 +38,7 @@ const Navbar = () => {
       link = "";
   }
   return (
-    <nav className="w-full h-14 bg-slate-300 shadow-xl">
+    <nav className="flex items-center w-full h-14 bg-slate-300 shadow-xl">
       <div className="grid grid-cols-3">
         <Link href={link} onClick={click}>
           <Button props={prop}></Button>

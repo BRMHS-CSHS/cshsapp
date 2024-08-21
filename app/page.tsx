@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { loginCreds } from "@/actions/auth";
+import Navbar from "@/components/navbar/navbar";
 
 export default function Home() {
   const router = useRouter();
@@ -12,6 +13,7 @@ export default function Home() {
 
   return (
     <main>
+      <Navbar/>
       <div className="my-5 flex flex-col items-center justify-center font-mono">
         <h1 className="font-bold text-lg tracking-wider">User Login</h1>
         <form action={handleSubmit}>
