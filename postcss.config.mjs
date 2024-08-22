@@ -1,8 +1,17 @@
-/** @type {import('postcss-load-config').Config} */
-const config = {
-  plugins: {
-    tailwindcss: {},
-  },
-};
+import postcssPresetEnv from "postcss-preset-env";
+import postcssImport from "postcss-import";
+import tailwindcss from "tailwindcss";
 
-export default config;
+export default {
+    plugins: [
+        postcssImport,
+        tailwindcss,
+        postcssPresetEnv({
+            features: {
+                ["nesting-rules"]: {
+                    noIsPseudoSelector: false
+                }
+            }
+        })
+    ]
+};

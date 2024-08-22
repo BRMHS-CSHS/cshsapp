@@ -1,22 +1,49 @@
-import {nextui} from '@nextui-org/theme';
 import type { Config } from "tailwindcss";
 
+import twForms from "@tailwindcss/forms";
+import twTypography from "@tailwindcss/typography";
+
 const config: Config = {
-  content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./node_modules/@nextui-org/theme/dist/components/(pagination|table|checkbox|spacer).js"
-  ],
-  theme: {
-    extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-      },
+    mode: "jit",
+    prefix: "tw-",
+    content: [
+        "./components/**/*.{js,ts,jsx,tsx,md,mdx}",
+        "./app/**/*.{js,ts,jsx,tsx,md,mdx}"
+    ],
+    theme: {
+        container: {
+            screens: {
+                ["2xl"]: "1400px"
+            },
+            center: true,
+            padding: "1rem"
+        },
+        extend: {
+            colors: {
+                background: "hsl(var(--background))",
+                foreground: "hsl(var(--foreground))",
+                cshs: {
+                    DEFAULT: "hsl(var(--cshs))"
+                }
+            },
+            borderRadius: {
+                lg: "var(--radius)",
+                md: "calc(var(--radius) - 2px)",
+                sm: "calc(var(--radius) - 4px)"
+            },
+            typography: {
+                DEFAULT: {
+                    css: {
+                        ["max-width"]: "100%"
+                    }
+                }
+            }
+        }
     },
-  },
-  plugins: [nextui()],
+    plugins: [
+        twForms,
+        twTypography
+    ]
 };
+
 export default config;
