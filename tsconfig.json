@@ -1,34 +1,38 @@
 {
-  "compilerOptions": {
-    "target": "ES5",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "jsx": "preserve",
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "incremental": true,
-    "downlevelIteration": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
+    "compilerOptions": {
+        "lib": ["DOM", "DOM.Iterable", "ESNext"],
+        "module": "ESNext",
+        "target": "ES5",
+
+        "moduleResolution": "Bundler",
+
+        "strict": true,
+        "strictNullChecks": true,
+        "alwaysStrict": true,
+        "skipLibCheck": true,
+
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "resolveJsonModule": true,
+
+        "jsx": "preserve",
+
+        "allowJs": true,
+        "noEmit": true,
+        "isolatedModules": true,
+        "incremental": true,
+        "downlevelIteration": true,
+
+        "plugins": [{
+            "name": "next"
+        }],
+        "paths": {
+            "@/*": ["./*"]
+        }
+    },
+    "include": [
+        "**/*.ts",
+        "**/*.tsx",
     ],
-    "paths": {
-      "@/*": ["./*"]
-    }
-  },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "eslint.config.mjs",
-    ".next/types/**/*.ts"
-, "next.config.mjs"  ],
-  "exclude": ["node_modules", "vendor"]
+    "exclude": ["node_modules", "vendor"]
 }
