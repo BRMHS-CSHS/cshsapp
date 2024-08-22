@@ -3,6 +3,8 @@ import type { Config } from "tailwindcss";
 import twForms from "@tailwindcss/forms";
 import twTypography from "@tailwindcss/typography";
 
+import { nextui as nextUI } from "@nextui-org/react";
+
 const config: Config = {
     mode: "jit",
     prefix: "tw-",
@@ -42,7 +44,8 @@ const config: Config = {
     },
     plugins: [
         twForms,
-        twTypography
+        twTypography,
+        nextUI()
     ]
 };
 

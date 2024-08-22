@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { StrictMode } from "react";
+import { NextUIProvider } from "@nextui-org/react";
 
 import TanstackQuery from "@/components/providers/TanstackQuery";
 
@@ -36,11 +37,13 @@ export default function RootLayout ({ children }: { children: React.ReactNode })
             <body className="tw-min-h-screen tw-bg-background tw-font-sans tw-antialiased tw-text-white tw-box-border tw-dark">
                 <StrictMode>
                     <TanstackQuery>
-                        <Header />
-                        <div className="tw-container tw-mb-32 sm:tw-mt-32 tw-mt-8">
-                            <div>{children}</div>
-                        </div>
-                        <Footer />
+                        <NextUIProvider>
+                            <Header />
+                            <div className="tw-container tw-mb-32 sm:tw-mt-32 tw-mt-8">
+                                <div>{children}</div>
+                            </div>
+                            <Footer />
+                        </NextUIProvider>
                     </TanstackQuery>
                 </StrictMode>
             </body>
