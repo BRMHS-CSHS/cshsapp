@@ -1,38 +1,44 @@
 {
-    "compilerOptions": {
-        "lib": ["DOM", "DOM.Iterable", "ESNext"],
-        "module": "ESNext",
-        "target": "ES5",
-
-        "moduleResolution": "Bundler",
-
-        "strict": true,
-        "strictNullChecks": true,
-        "alwaysStrict": true,
-        "skipLibCheck": true,
-
-        "esModuleInterop": true,
-        "allowSyntheticDefaultImports": true,
-        "resolveJsonModule": true,
-
-        "jsx": "preserve",
-
-        "allowJs": true,
-        "noEmit": true,
-        "isolatedModules": true,
-        "incremental": true,
-        "downlevelIteration": true,
-
-        "plugins": [{
-            "name": "next"
-        }],
-        "paths": {
-            "@/*": ["./*"]
-        }
-    },
-    "include": [
-        "**/*.ts",
-        "**/*.tsx",
+  "compilerOptions": {
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
     ],
-    "exclude": ["node_modules", "vendor"]
+    "module": "ESNext",
+    "target": "ES5",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "strictNullChecks": true,
+    "alwaysStrict": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "jsx": "preserve",
+    "allowJs": true,
+    "noEmit": true,
+    "isolatedModules": true,
+    "incremental": true,
+    "downlevelIteration": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    }
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "vendor"
+  ]
 }

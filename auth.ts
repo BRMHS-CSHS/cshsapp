@@ -45,7 +45,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 password: { label: "Password", type: "password" },
                 role: { label: "Role", type: "role" }
             },
-
             authorize: async credentials => {
                 if (typeof credentials?.email !== "string" || typeof credentials?.password !== "string") return null;
 
@@ -60,7 +59,24 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
                 return user;
             }
+        }),
+        Credentials({
+            id: "admin",
+            credentials: {
+                email: {label: "Email", type: "email"},
+                password: {label: "Password", type: "password"},
+            },
+
+            authorize: (credentials : any)  => {
+                if (!credentials || !credentials.email || !credentials.password) return null;
+          
+                const email = credentials.email as string;
+                const password = credentials.password as string;
+          
+                if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) return credentials;
+                throw new Error("Bad Credentials"); 
+            }
         })
-        // todo: admin implementation
+        // todo: admin implementation -> auth ✔
     ]
 });
