@@ -1,4 +1,4 @@
-import NextAuth from "next-auth";
+import NextAuth, { type User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
 import { PrismaAdapter } from "@auth/prisma-adapter";
@@ -23,8 +23,13 @@ const SALT_ROUNDS = 10;
  */
 export const hashPassword = (password: string): Promise<string> => bcrypt.hash(password, SALT_ROUNDS);
 
+export interface AuthUser extends User {
+    hours: number
+}
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
     adapter: PrismaAdapter(db),
+    session: { strategy: "jwt" },
     callbacks: {
         session: async ({ session, token = null }) => {
             // if it exists, which it doesn't. will replace later.
@@ -35,6 +40,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             }
 
             return session;
+        },
+        jwt: async ({ token, user }) => {
+            if (user) {
+                token.email = user.email;
+                token.name = user.name;
+                token.hours = (user as any).hours;
+            }
+
+            return token;
         }
     },
     providers: [
