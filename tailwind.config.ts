@@ -7,10 +7,10 @@ import { nextui as nextUI } from "@nextui-org/react";
 
 const config: Config = {
     mode: "jit",
-    prefix: "tw-",
     content: [
         "./components/**/*.{js,ts,jsx,tsx,md,mdx}",
-        "./app/**/*.{js,ts,jsx,tsx,md,mdx}"
+        "./app/**/*.{js,ts,jsx,tsx,md,mdx}",
+        "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}"
     ],
     theme: {
         container: {
@@ -24,6 +24,8 @@ const config: Config = {
             colors: {
                 background: "hsl(var(--background))",
                 foreground: "hsl(var(--foreground))",
+                primary: "hsl(var(--primary))",
+                secondary: "hsl(var(--secondary))",
                 cshs: {
                     DEFAULT: "hsl(var(--cshs))"
                 }
@@ -42,6 +44,7 @@ const config: Config = {
             }
         }
     },
+    darkMode: "class",
     plugins: [
         twForms,
         twTypography,

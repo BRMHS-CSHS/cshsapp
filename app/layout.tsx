@@ -4,8 +4,10 @@ import { NextUIProvider } from "@nextui-org/react";
 
 import TanstackQuery from "@/components/providers/TanstackQuery";
 
-import Header from "@/components/layouts/Header";
+import Header from "@/components/layouts/header/Header";
 import Footer from "@/components/layouts/Footer";
+
+import "./globals.css";
 
 export const metadata: Metadata = {
     metadataBase: new URL("https://cshs.brmhs.org"),
@@ -34,14 +36,14 @@ export const viewport: Viewport = {
 export default function RootLayout ({ children }: { children: React.ReactNode }): React.ReactElement {
     return (
         <html lang="en">
-            <body className="tw-min-h-screen tw-bg-background tw-font-sans tw-antialiased tw-text-white tw-box-border tw-dark">
+            <body className="min-h-screen bg-background font-sans antialiased text-white box-border dark">
                 <StrictMode>
                     <TanstackQuery>
                         <NextUIProvider>
                             <Header />
-                            <div className="tw-container tw-mb-32 sm:tw-mt-32 tw-mt-8">
-                                <div>{children}</div>
-                            </div>
+                            <main className="dark container mb-32 sm:mt-32 mt-8 mx-auto">
+                                {children}
+                            </main>
                             <Footer />
                         </NextUIProvider>
                     </TanstackQuery>

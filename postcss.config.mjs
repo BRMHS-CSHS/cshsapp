@@ -1,17 +1,13 @@
-import postcssPresetEnv from "postcss-preset-env";
-import postcssImport from "postcss-import";
-import tailwindcss from "tailwindcss";
-
 export default {
     plugins: [
-        postcssImport,
-        tailwindcss,
-        postcssPresetEnv({
+        "postcss-import",
+        "tailwindcss",
+        ["postcss-preset-env", {
             features: {
                 ["nesting-rules"]: {
                     noIsPseudoSelector: false
                 }
             }
-        })
+        }]
     ]
 };

@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "engines": {
-    "node": ">=20.0.0",
-    "pnpm": ">=9.0.0"
+    "node": ">=22.0.0",
+    "pnpm": ">=9.8.0"
   },
   "scripts": {
     "dev": "next dev",
@@ -19,22 +19,22 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@eslint/js": "^9.9.0",
-    "@next/eslint-plugin-next": "^14.2.5",
+    "@eslint/js": "^9.9.1",
+    "@next/eslint-plugin-next": "^14.2.6",
     "@stylistic/eslint-plugin": "^2.6.4",
     "@types/bcryptjs": "^2.4.6",
     "@types/bootstrap": "^5.2.10",
     "@types/eslint__js": "^8.42.3",
     "@types/mdx": "^2.0.13",
-    "@types/node": "^22.4.1",
-    "@types/react": "^18.3.3",
+    "@types/node": "^22.5.0",
+    "@types/react": "^18.3.4",
     "@types/react-dom": "^18.3.0",
     "eslint": "^8.57.0",
     "eslint-plugin-jsx-a11y": "^6.9.0",
     "eslint-plugin-react": "^7.35.0",
     "eslint-plugin-react-hooks": "^4.6.2",
     "globals": "^15.9.0",
-    "next": "^14.2.5",
+    "next": "^14.2.6",
     "postcss": "^8.4.41",
     "postcss-import": "^16.1.0",
     "postcss-preset-env": "^10.0.2",
@@ -47,16 +47,16 @@
     "@auth/prisma-adapter": "^2.4.2",
     "@mdx-js/loader": "^3.0.1",
     "@mdx-js/react": "^3.0.1",
-    "@next/bundle-analyzer": "^14.2.5",
-    "@next/mdx": "^14.2.5",
+    "@next/bundle-analyzer": "^14.2.6",
+    "@next/mdx": "^14.2.6",
     "@nextui-org/react": "^2.4.6",
     "@prisma/client": "^5.18.0",
     "@tailwindcss/forms": "^0.5.7",
     "@tailwindcss/typography": "^0.5.14",
-    "@tanstack/react-query": "^5.51.24",
+    "@tanstack/react-query": "^5.52.1",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^5.3.3",
-    "framer-motion": "^11.3.29",
+    "framer-motion": "^11.3.30",
     "fuse.js": "^7.0.0",
     "lucide-react": "^0.428.0",
     "next-auth": "5.0.0-beta.20",
@@ -64,5 +64,5 @@
     "prisma": "^5.18.0",
     "tailwindcss": "^3.4.10"
   },
-  "packageManager": "pnpm@9.7.1+sha512.faf344af2d6ca65c4c5c8c2224ea77a81a5e8859cbc4e06b1511ddce2f0151512431dd19e6aff31f2c6a8f5f2aced9bd2273e1fed7dd4de1868984059d2c4247"
+  "packageManager": "pnpm@9.8.0+sha512.8e4c3550fb500e808dbc30bb0ce4dd1eb614e30b1c55245f211591ec2cdf9c611cabd34e1364b42f564bd54b3945ed0f49d61d1bbf2ec9bd74b866fcdc723276"
 }

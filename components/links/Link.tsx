@@ -10,7 +10,7 @@ export default function URLLink (props: Props): React.ReactElement<Props, typeof
             className={
                 unstyled
                     ? props.className
-                    : `${props.className} tw-text-hyperlink tw-no-underline hover:tw-underline`
+                    : `${props.className} text-hyperlink text no-underline hover:underline`
             }
         />
     );
