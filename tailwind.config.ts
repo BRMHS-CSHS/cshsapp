@@ -1,8 +1,5 @@
 import type { Config } from "tailwindcss";
 
-import twForms from "@tailwindcss/forms";
-import twTypography from "@tailwindcss/typography";
-
 import { nextui as nextUI } from "@nextui-org/react";
 
 const config: Config = {
@@ -14,9 +11,6 @@ const config: Config = {
     ],
     theme: {
         container: {
-            screens: {
-                ["2xl"]: "1400px"
-            },
             center: true,
             padding: "1rem"
         },
@@ -29,25 +23,11 @@ const config: Config = {
                 cshs: {
                     DEFAULT: "hsl(var(--cshs))"
                 }
-            },
-            borderRadius: {
-                lg: "var(--radius)",
-                md: "calc(var(--radius) - 2px)",
-                sm: "calc(var(--radius) - 4px)"
-            },
-            typography: {
-                DEFAULT: {
-                    css: {
-                        ["max-width"]: "100%"
-                    }
-                }
             }
         }
     },
     darkMode: "class",
     plugins: [
-        twForms,
-        twTypography,
         nextUI()
     ]
 };

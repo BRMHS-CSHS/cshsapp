@@ -1,7 +1,4 @@
-import React from "react";
-
-export const Settings = async () =>
-{
+export const Settings = (): React.ReactElement => {
     return (
         <div className="flex justify-center items-center">
             <section className="size-96 outline outline-zinc-900 bg-gray-800 rounded-large">
@@ -10,5 +7,5 @@ export const Settings = async () =>
                 </ul>
             </section>
         </div>
-    )
-}
+    );
+};

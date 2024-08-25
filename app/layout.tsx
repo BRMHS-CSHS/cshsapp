@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { StrictMode } from "react";
+import { ChakraProvider } from "@chakra-ui/react";
 import { NextUIProvider } from "@nextui-org/react";
 
 import TanstackQuery from "@/components/providers/TanstackQuery";
@@ -40,11 +41,13 @@ export default function RootLayout ({ children }: { children: React.ReactNode })
                 <StrictMode>
                     <TanstackQuery>
                         <NextUIProvider>
-                            <Header />
-                            <main className="dark container mb-32 sm:mt-32 mt-8 mx-auto">
-                                {children}
-                            </main>
-                            <Footer />
+                            <ChakraProvider>
+                                <Header />
+                                <main className="dark container mb-32 sm:mt-32 mt-8 mx-auto">
+                                    {children}
+                                </main>
+                                <Footer />
+                            </ChakraProvider>
                         </NextUIProvider>
                     </TanstackQuery>
                 </StrictMode>
