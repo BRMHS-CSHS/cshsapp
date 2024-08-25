@@ -8,10 +8,10 @@ permissions:
   contents: write
 
 jobs:
-  ci:
-    name: CI
+  cd:
+    name: CD
     runs-on: ubuntu-latest
-    concurrency: ci-${{ github.ref }}
+    concurrency: cd-${{ github.ref }}
 
     steps:
       - name: Checkout Repository
@@ -36,7 +36,7 @@ jobs:
         run: pnpm exec prisma generate
 
       - name: Build
-        run: pnpm run build:ci
+        run: pnpm run ci:build
 
       - name: Deploy
         uses: wlixcc/SFTP-Deploy-Action@v1.2.4

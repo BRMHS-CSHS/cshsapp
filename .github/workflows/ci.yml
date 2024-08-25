@@ -36,7 +36,7 @@ jobs:
         run: pnpm exec prisma generate
 
       - name: Build
-        run: pnpm run build:ci
+        run: pnpm run ci:build
 
       - name: Lint
         run: pnpm ci:lint
