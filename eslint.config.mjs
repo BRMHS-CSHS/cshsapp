@@ -172,6 +172,6 @@ export default tseslint.config(
         }
     },
     {
-        ignores: [".next/**", "vendor/**"]
+        ignores: [".next/**", "vendor/**", "build/**"]
     }
 );

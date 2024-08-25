@@ -35,7 +35,10 @@ jobs:
       - name: Generate Prisma Client
         run: pnpm exec prisma generate
 
-      - name: Build
+      - name: Lint
+        run: pnpm run ci:lint
+
+        - name: Build
         run: pnpm run ci:build
 
       - name: Deploy
@@ -45,6 +48,6 @@ jobs:
           server: '${{ secrets.SFTP_SERVER }}'
           port: '${{ secrets.SFTP_PORT }}'
           ssh_private_key: ${{ secrets.SFTP_PRIVKEY }} 
-          local_path: './dist/*'
+          local_path: './build/*'
           remote_path: '/var/www/cshs.brmhs.org'
 
