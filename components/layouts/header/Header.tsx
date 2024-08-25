@@ -27,8 +27,10 @@ export default function Header (): React.ReactElement {
         <Navbar isBordered>
             <NavbarContent justify="start">
                 <NavbarBrand className="mr-4">
-                    <Logo />
+                    <Link href="/">
+                    <Logo/>
                     <p className="hidden sm:block ml-2 font-bold text-white">CSHS</p>
+                    </Link>
                 </NavbarBrand>
                 <NavbarContent className="hidden sm:flex gap-3">
                     {wikiPages.map(page => (
