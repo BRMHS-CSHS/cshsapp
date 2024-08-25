@@ -29,7 +29,10 @@ const nextConfig = {
         ignoreBuildErrors: true
     },
 
-    transpilePackages: ["@mdx-js/loader", "@mdx-js/react", "next-mdx-remote"]
+    transpilePackages: ["@mdx-js/loader", "@mdx-js/react", "next-mdx-remote"],
+
+    distDir: "build",
+    cleanDistDir: true
 };
 
 export default withBundleAnalyzer(withMDX(nextConfig));
