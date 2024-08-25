@@ -45,6 +45,6 @@ jobs:
           server: '${{ secrets.SFTP_SERVER }}'
           port: '${{ secrets.SFTP_PORT }}'
           ssh_private_key: ${{ secrets.SFTP_PRIVKEY }} 
-          local_path: './dist/*'
+          local_path: './build/*'
           remote_path: '/var/www/cshs.brmhs.org'
 
