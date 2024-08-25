@@ -1,6 +1,9 @@
-import React, { useEffect } from "react";
-import { auth } from "@/auth";
+"use client";
+
+import { useEffect } from "react";
 import { redirect } from "next/navigation";
+
+import { auth } from "@/auth";
 
 export default function Home (): React.ReactElement {
     useEffect(() => {
