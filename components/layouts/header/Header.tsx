@@ -69,16 +69,15 @@ export default function Header (): React.ReactElement {
                         />
                     </DropdownTrigger>
                     <DropdownMenu aria-label="Profile Actions" variant="flat">
-                        <DropdownItem key="profile" className="h-14 gap-2">
+                        <DropdownItem href="/profile" key="profile" className="h-14 gap-2">
                             <p className="font-semibold">Signed in as</p>
                             <p className="font-semibold">zoey@example.com</p>
                         </DropdownItem>
-                        <DropdownItem key="settings">My Settings</DropdownItem>
-                        <DropdownItem key="team_settings">Team Settings</DropdownItem>
-                        <DropdownItem key="analytics">Analytics</DropdownItem>
-                        <DropdownItem key="system">System</DropdownItem>
-                        <DropdownItem key="configurations">Configurations</DropdownItem>
-                        <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
+                        <DropdownItem key="admin_page" href="/admin">Admin Page</DropdownItem>
+                        <DropdownItem key="settings" href="/settings">My Settings</DropdownItem>
+                        <DropdownItem key="service_opp" href="/service">Service Opportunities</DropdownItem>
+                        <DropdownItem key="service_hist" href="/service-history">Service History</DropdownItem>
+                        <DropdownItem key="contact" href="/contact_page">Contact Society</DropdownItem>
                         <DropdownItem key="logout" color="danger">
                             Log Out
                         </DropdownItem>
