@@ -1,13 +1,16 @@
+"use server"
 import { db } from "@/db";
 import { auth } from "@/auth";
 
-export const registerUser = async (credentials: HTMLFormElement): Promise<string> => {
-    if (typeof credentials?.email !== "string" || typeof credentials?.password !== "string") throw new Error("Invalid Credentials");
+export const registerUser = async (credentials: any): Promise<string> => {
+    if (typeof credentials?.email !== "string" || typeof credentials?.password !== "string" || typeof credentials?.name !== "string" || !credentials?.grade || !credentials?.hours) throw new Error("Invalid Credentials");
 
     const form = {
-        email: credentials.email,
-        password: credentials.password
-        // etc.
+        email: credentials.email as string,
+        password: credentials.password as string,
+        name: credentials.name as string,
+        hours: Number.parseInt(credentials.hours),
+        grade: Number.parseInt(credentials.grade)
     };
 
     if (await db.user.findUnique({ where: { email: form.email } })) throw new Error("Email already exists");
@@ -15,8 +18,10 @@ export const registerUser = async (credentials: HTMLFormElement): Promise<string
     const res = await db.user.create({
         data: {
             email: form.email,
-            password: form.password
-            // etc.
+            password: form.password,
+            name: form.name,
+            hours: form.hours,
+            grade: form.grade
         }
     });
 

@@ -23,17 +23,18 @@ import {
     TableColumn,
     TableHeader,
     TableRow,
+    useDisclosure,
     User
 } from "@nextui-org/react";
 import {
     ChevronDown,
     EllipsisVertical,
-    Plus,
     Search
 } from "lucide-react";
 
 import { columns, users, statusOptions } from "@/lib/typings/user"; // temp until get data from db
 import { capitalize } from "@/lib/util/string";
+import { RegisterMenu } from "@/components/admin/Register";
 
 const statusColorMap: Record<string, ChipProps["color"]> = {
     active: "success",
@@ -55,6 +56,8 @@ export default function App (): React.ReactElement {
         column: "name",
         direction: "ascending"
     });
+
+    const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
     const [page, setPage] = useState(1);
 
@@ -237,9 +240,7 @@ export default function App (): React.ReactElement {
                                 ))}
                             </DropdownMenu>
                         </Dropdown>
-                        <Button color="primary" endContent={<Plus />}>
-                            Add New
-                        </Button>
+                        <RegisterMenu/>
                     </div>
                 </div>
                 <div className="flex justify-between items-center">
