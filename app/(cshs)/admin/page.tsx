@@ -23,7 +23,6 @@ import {
     TableColumn,
     TableHeader,
     TableRow,
-    useDisclosure,
     User
 } from "@nextui-org/react";
 import {
@@ -56,8 +55,6 @@ export default function App (): React.ReactElement {
         column: "name",
         direction: "ascending"
     });
-
-    const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
     const [page, setPage] = useState(1);
 
@@ -240,7 +237,7 @@ export default function App (): React.ReactElement {
                                 ))}
                             </DropdownMenu>
                         </Dropdown>
-                        <RegisterMenu/>
+                        <RegisterMenu />
                     </div>
                 </div>
                 <div className="flex justify-between items-center">

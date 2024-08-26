@@ -98,7 +98,7 @@ export default tseslint.config(
             ["@stylistic/arrow-parens"]: ["warn", "as-needed"],
             ["@stylistic/brace-style"]: ["warn", "1tbs", { allowSingleLine: true }],
             ["@stylistic/indent"]: ["warn", 4, { SwitchCase: 1 }],
-            ["@stylistic/linebreak-style"]: ["warn", "unix"],
+            ["@stylistic/linebreak-style"]: ["warn", "windows"],
             ["@stylistic/max-statements-per-line"]: "off",
             ["@stylistic/jsx-one-expression-per-line"]: "off",
             ["@stylistic/member-delimiter-style"]: ["warn", { singleline: { delimiter: "comma" }, multiline: { delimiter: "none" } }],
@@ -110,6 +110,9 @@ export default tseslint.config(
 
             // @typescript-eslint
             ["@typescript-eslint/array-type"]: ["warn", { default: "array-simple" }],
+            ["@typescript-eslint/no-misused-promises"]: ["warn", {
+                checksVoidReturn: false
+            }],
             ["@typescript-eslint/prefer-literal-enum-member"]: [
                 "error",
                 { allowBitwiseExpressions: true }

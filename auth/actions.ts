@@ -1,9 +1,15 @@
-"use server"
+"use server";
 import { db } from "@/db";
 import { auth } from "@/auth";
 
 export const registerUser = async (credentials: any): Promise<string> => {
-    if (typeof credentials?.email !== "string" || typeof credentials?.password !== "string" || typeof credentials?.name !== "string" || !credentials?.grade || !credentials?.hours) throw new Error("Invalid Credentials");
+    if (
+        typeof credentials?.email !== "string"
+        || typeof credentials?.password !== "string"
+        || typeof credentials?.name !== "string"
+        || !credentials?.grade
+        || !credentials?.hours
+    ) { throw new Error("Invalid Credentials"); }
 
     const form = {
         email: credentials.email as string,
@@ -13,7 +19,7 @@ export const registerUser = async (credentials: any): Promise<string> => {
         grade: Number.parseInt(credentials.grade)
     };
 
-    if (await db.user.findUnique({ where: { email: form.email } })) throw new Error("Email already exists");
+    if (await db.user.findUnique({ where: { email: form.email } })) { throw new Error("Email already exists"); }
 
     const res = await db.user.create({
         data: {
@@ -29,11 +35,14 @@ export const registerUser = async (credentials: any): Promise<string> => {
     return "Success";
 };
 
-export const changeHours = async (email?: string, hours?: number): Promise<string> => {
+export const changeHours = async (
+    email?: string,
+    hours?: number
+): Promise<string> => {
     if (!email || !hours) throw new Error("Invalid parameters.");
 
     const admin = await auth();
-    if (admin?.user?.email !== process.env.ADMIN_EMAIL) throw new Error("Unauthorized");
+    if (admin?.user?.email !== process.env.ADMIN_EMAIL) { throw new Error("Unauthorized"); }
 
     const user = await db.user.update({
         where: { email: email },
@@ -44,7 +53,10 @@ export const changeHours = async (email?: string, hours?: number): Promise<strin
     return "Success";
 };
 
-export const changeEmail = async (oldEmail?: string, newEmail?: string): Promise<string> => {
+export const changeEmail = async (
+    oldEmail?: string,
+    newEmail?: string
+): Promise<string> => {
     if (!oldEmail || !newEmail) throw new Error("Invalid parameters.");
 
     const user = await db.user.update({
