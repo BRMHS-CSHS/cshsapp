@@ -3,6 +3,7 @@ import { db } from "@/db";
 import { auth, signIn } from "@/auth";
 import { AuthError } from "next-auth";
 import { hashPassword } from "@/auth";
+import { redirect } from "next/navigation";
 
 export const registerUser = async (credentials: any): Promise<string> => {
     if (
@@ -90,7 +91,7 @@ export const loginUser: any = async (credentials: any) => {
             }
         }
     }
-    return ("Success");
+    redirect("/");
 };
 
 /**
