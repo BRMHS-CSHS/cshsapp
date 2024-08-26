@@ -70,7 +70,7 @@ export default function Header (): React.ReactElement {
                         </DropdownTrigger>
                         <DropdownMenu aria-label="Profile Actions" variant="flat">
                             <DropdownItem
-                                href="/profile"
+                                href="/login"
                                 key="profile"
                                 className="h-14 gap-2"
                                 color="success"

@@ -1,6 +1,8 @@
 "use server";
 import { db } from "@/db";
-import { auth } from "@/auth";
+import { auth, signIn } from "@/auth";
+import { AuthError } from "next-auth";
+import { hashPassword } from "@/auth";
 
 export const registerUser = async (credentials: any): Promise<string> => {
     if (
@@ -13,7 +15,7 @@ export const registerUser = async (credentials: any): Promise<string> => {
 
     const form = {
         email: credentials.email as string,
-        password: credentials.password as string,
+        password: await hashPassword(credentials.password as string),
         name: credentials.name as string,
         hours: Number.parseInt(credentials.hours),
         grade: Number.parseInt(credentials.grade)
@@ -66,6 +68,29 @@ export const changeEmail = async (
 
     if (!user) throw new Error("No email associated.");
     return "Success";
+};
+
+export const loginUser: any = async (credentials: any) => {
+    if (!credentials.email || !credentials.password) throw new Error("Invalid Credentials");
+
+    const data = {
+        email: credentials.email as string,
+        password: credentials.password as string
+    };
+
+    try {
+        await signIn("user", data);
+    } catch (error: any) {
+        if (error instanceof AuthError) {
+            switch (error.type) {
+                case "CredentialsSignin":
+                    return ("Invalid Credentials");
+                default:
+                    return ("Something went wrong!");
+            }
+        }
+    }
+    return ("Success");
 };
 
 /**
