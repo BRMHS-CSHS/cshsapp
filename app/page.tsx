@@ -18,7 +18,7 @@ export default function Home (): React.ReactElement {
     return (
         <div className="flex flex-col justify-center items-center">
             <div className="bg-gray-800 outline outline-4 outline-zinc-800 rounded-large p-20 space-y-10 flex flex-col">
-                <Card className="space-y-10 flex flex-col items-center ">
+                <Card className="space-y-10 flex flex-col items-center">
                     <CardHeader>
                         <Heading size="xl" className="font-extrabold">Computer Science Honor Society</Heading>
                     </CardHeader>

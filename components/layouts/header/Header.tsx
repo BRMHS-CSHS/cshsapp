@@ -85,7 +85,7 @@ export default function Header (): React.ReactElement {
                             <DropdownItem key="service_opp" href="/service" color="success">Service Opportunities</DropdownItem>
                             <DropdownItem key="service_hist" href="/service-history" color="success">Service History</DropdownItem>
                             <DropdownItem key="contact" href="/contact_page" color="warning">Contact Society</DropdownItem>
-                            <DropdownItem key="logout" color="danger">Log Out</DropdownItem>
+                            <DropdownItem key="logout" color="danger"> Log Out </DropdownItem>
                         </DropdownMenu>
                     </Dropdown>
                 </NavbarContent>
