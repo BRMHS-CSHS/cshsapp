@@ -19,9 +19,11 @@ import { Search } from "lucide-react";
 import { Logo } from "./Logo";
 
 import { wikiPages } from "@/lib/util/search";
+import { useSession } from "next-auth/react";
 
 export default function Header (): React.ReactElement {
     const pathname = usePathname();
+    const session = useSession();
     return (
         <header>
             <Navbar isBordered maxWidth="2xl">
@@ -76,7 +78,7 @@ export default function Header (): React.ReactElement {
                                 color="success"
                             >
                                 <p className="font-semibold">Sign In</p>
-                                <p className="font-semibold">zoey@example.com</p>
+                                <p className="font-semibold">{session.data?.user?.email}</p>
                             </DropdownItem>
                             <DropdownItem key="admin_page" href="/admin">Admin Page</DropdownItem>
                             <DropdownItem key="settings" href="/settings" color="warning">My Settings</DropdownItem>
