@@ -20,7 +20,7 @@ export default function Home (): React.ReactElement {
             <div className="bg-gray-800 outline outline-4 outline-zinc-800 rounded-large p-20 space-y-10 flex flex-col">
                 <Card className="space-y-10 flex flex-col items-center">
                     <CardHeader>
-                        <Heading size="xl" className="font-extrabold">Computer Science Honor Society</Heading>
+                        <Heading size="xl" className="font-extrabold text-3xl">Computer Science Honor Society</Heading>
                     </CardHeader>
 
                     <CardBody>
@@ -118,9 +118,17 @@ export default function Home (): React.ReactElement {
                         </Stack>
                     </CardBody>
                 </Card>
-                <Link href="/login">
-                    <Button color="primary">Log In</Button>
-                </Link>
+                <div className="flex justify-center space-x-4">
+                    <Link href="/login">
+                        <Button variant="ghost" color="primary">Log In</Button>
+                    </Link>
+                    <Link href="/service">
+                        <Button variant="ghost" color="success">View Service Opportunities</Button>
+                    </Link>
+                    <Link target="_blank" href="https://csteachers.org/cshs/">
+                        <Button variant="ghost" color="danger">Visit CSHS Site</Button>
+                    </Link>
+                </div>
             </div>
         </div>
     );
