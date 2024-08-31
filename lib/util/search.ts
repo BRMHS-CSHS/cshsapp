@@ -15,11 +15,6 @@ export const wikiPages: SearchItem[] = [
         name: "Dashboard",
         url: "/dashboard",
         description: "The dashboard."
-    },
-    {
-        name: "News",
-        url: "/news",
-        description: "Local CS news."
     }
 ];
 
