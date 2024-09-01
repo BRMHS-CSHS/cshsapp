@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { StrictMode } from "react";
 import { ChakraBaseProvider } from "@chakra-ui/react";
 import { NextUIProvider } from "@nextui-org/react";
-import { SessionProvider } from "next-auth/react";
+import { SessionDataProvider } from "@/components/auth/SessionDataWrapper";
 
 import TanstackQuery from "@/components/providers/TanstackQuery";
 
@@ -40,7 +40,7 @@ export default function RootLayout ({ children }: { children: React.ReactNode })
         <html lang="en">
             <body className="min-h-screen bg-background font-sans antialiased text-white box-border dark">
                 <StrictMode>
-                    <SessionProvider>
+                    <SessionDataProvider>
                         <TanstackQuery>
                             <NextUIProvider>
                                 <ChakraBaseProvider>
@@ -52,7 +52,7 @@ export default function RootLayout ({ children }: { children: React.ReactNode })
                                 </ChakraBaseProvider>
                             </NextUIProvider>
                         </TanstackQuery>
-                    </SessionProvider>
+                    </SessionDataProvider>
                 </StrictMode>
             </body>
         </html>

@@ -19,11 +19,11 @@ import { Search } from "lucide-react";
 import { Logo } from "./Logo";
 
 import { wikiPages } from "@/lib/util/search";
-import { useSession } from "next-auth/react";
+import { useSessionData } from "@/lib/auth/useSessionData";
 
 export default function Header (): React.ReactElement {
     const pathname = usePathname();
-    const session = useSession();
+    const session = useSessionData();
     return (
         <header>
             <Navbar isBordered maxWidth="2xl">
