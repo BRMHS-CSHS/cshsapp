@@ -1,9 +1,10 @@
 "use server";
 import { db } from "@/db";
-import { auth, signIn } from "@/auth";
+import { auth, signIn, signOut } from "@/auth";
 import { AuthError } from "next-auth";
 import { hashPassword } from "@/auth";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 export const registerUser = async (credentials: any): Promise<string> => {
     if (
@@ -92,6 +93,11 @@ export const loginUser: any = async (credentials: any) => {
         }
     }
     redirect("/");
+};
+
+export const logout = async (): Promise<any> => {
+    await signOut({ redirect: true, redirectTo: "/" });
+    revalidatePath("/");
 };
 
 /**

@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 import {
     Navbar,
     NavbarBrand,
@@ -20,10 +21,19 @@ import { Logo } from "./Logo";
 
 import { wikiPages } from "@/lib/util/search";
 import { useSessionData } from "@/lib/auth/useSessionData";
+import { logout } from "@/auth/actions";
 
 export default function Header (): React.ReactElement {
     const pathname = usePathname();
     const session = useSessionData();
+    const isLoggedIn = session.data?.user?.email ? true : false;
+    const router = useRouter();
+
+    const handleLogout = async (): Promise<void> => {
+        await logout();
+        router.replace((pathname == "/") ? "/login" : "/");
+    };
+
     return (
         <header>
             <Navbar isBordered maxWidth="2xl">
@@ -72,20 +82,20 @@ export default function Header (): React.ReactElement {
                         </DropdownTrigger>
                         <DropdownMenu aria-label="Profile Actions" variant="flat">
                             <DropdownItem
-                                href="/login"
+                                href={isLoggedIn ? "" : "/login"}
                                 key="profile"
                                 className="h-14 gap-2"
                                 color="success"
                             >
-                                <p className="font-semibold">Sign In</p>
-                                <p className="font-semibold">{session.data?.user?.email}</p>
+                                <p className="font-semibold" hidden={isLoggedIn}>Sign In</p>
+                                <p className="font-semibold" hidden={!isLoggedIn}>{session.data?.user?.email}</p>
                             </DropdownItem>
                             <DropdownItem key="admin_page" href="/admin">Admin Page</DropdownItem>
                             <DropdownItem key="settings" href="/settings" color="warning">My Settings</DropdownItem>
                             <DropdownItem key="service_opp" href="/service" color="success">Service Opportunities</DropdownItem>
                             <DropdownItem key="service_hist" href="/service-history" color="success">Service History</DropdownItem>
                             <DropdownItem key="contact" href="/contact_page" color="warning">Contact Society</DropdownItem>
-                            <DropdownItem key="logout" color="danger"> Log Out </DropdownItem>
+                            <DropdownItem key="logout" color="danger" hidden={!isLoggedIn} onAction={handleLogout}> Log Out </DropdownItem>
                         </DropdownMenu>
                     </Dropdown>
                 </NavbarContent>
