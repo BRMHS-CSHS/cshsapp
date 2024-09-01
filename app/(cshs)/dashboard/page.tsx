@@ -74,7 +74,7 @@ export default function Dashboard (): React.ReactElement {
 
                             <div className="space-y-4">
                                 <div className="flex flex-col justify-center items-center">
-                                    <Text>
+                                    <Text className="font-bold text-xl">
                                         <Highlight
                                             query="Active Services"
                                             styles={{
