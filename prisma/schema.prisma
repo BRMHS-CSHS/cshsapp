@@ -59,6 +59,7 @@ model Session {
   sessionToken String   @unique
   userId       String   @db.ObjectId
   expires      DateTime
+  role         String   @default("USER")
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())

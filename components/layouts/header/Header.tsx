@@ -26,9 +26,13 @@ import { logout } from "@/auth/actions";
 export default function Header (): React.ReactElement {
     const pathname = usePathname();
     const session = useSessionData();
-    const isLoggedIn = session.data?.user?.email ? true : false;
-    const router = useRouter();
 
+    const User = {
+        isLoggedIn: session.data?.user?.email ? true : false,
+        role: (session.data?.user as any)?.role
+    };
+
+    const router = useRouter();
     const handleLogout = async (): Promise<void> => {
         await logout();
         router.replace((pathname == "/") ? "/login" : "/");
@@ -82,20 +86,21 @@ export default function Header (): React.ReactElement {
                         </DropdownTrigger>
                         <DropdownMenu aria-label="Profile Actions" variant="flat">
                             <DropdownItem
-                                href={isLoggedIn ? "" : "/login"}
+                                href={(User.isLoggedIn) ? "" : "/login"}
                                 key="profile"
                                 className="h-14 gap-2"
                                 color="success"
                             >
-                                <p className="font-semibold" hidden={isLoggedIn}>Sign In</p>
-                                <p className="font-semibold" hidden={!isLoggedIn}>{session.data?.user?.email}</p>
+                                <p className="font-semibold" hidden={User.isLoggedIn}>Sign In</p>
+                                <p className="font-semibold" hidden={!(User.isLoggedIn)}>{session.data?.user?.name}</p>
+                                <p className="font-semibold" hidden={!(User.isLoggedIn)}>{session.data?.user?.email}</p>
                             </DropdownItem>
-                            <DropdownItem key="admin_page" href="/admin">Admin Page</DropdownItem>
+                            <DropdownItem key="admin_page" href="/admin" hidden={User.role == "Admin" ? false : true}>Admin Page</DropdownItem>
                             <DropdownItem key="settings" href="/settings" color="warning">My Settings</DropdownItem>
                             <DropdownItem key="service_opp" href="/service" color="success">Service Opportunities</DropdownItem>
                             <DropdownItem key="service_hist" href="/service-history" color="success">Service History</DropdownItem>
                             <DropdownItem key="contact" href="/contact_page" color="warning">Contact Society</DropdownItem>
-                            <DropdownItem key="logout" color="danger" hidden={!isLoggedIn} onAction={handleLogout}> Log Out </DropdownItem>
+                            <DropdownItem key="logout" color="danger" hidden={!(User.isLoggedIn)} onAction={handleLogout}> Log Out </DropdownItem>
                         </DropdownMenu>
                     </Dropdown>
                 </NavbarContent>

@@ -37,6 +37,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 session.user.email = token.email!;
                 session.user.name = token.name;
                 (session.user as any).hours = token.hours;
+                (session.user as any).role = token.role;
             }
 
             return session;
@@ -46,6 +47,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 token.email = user.email;
                 token.name = user.name;
                 token.hours = (user as any).hours;
+                token.role = (user as any).role;
             }
 
             return token;
@@ -56,8 +58,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             id: "user",
             credentials: {
                 email: { label: "Email", type: "email" },
-                password: { label: "Password", type: "password" },
-                role: { label: "Role", type: "role" }
+                password: { label: "Password", type: "password" }
             },
             authorize: async credentials => {
                 if (typeof credentials?.email !== "string" || typeof credentials?.password !== "string") return null;
@@ -72,20 +73,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 if (!hashMatch) throw new Error("The credentials provided do not exist.");
 
                 return user;
-            }
-        }),
-        Credentials({
-            id: "admin",
-            credentials: {
-                email: { label: "Email", type: "email" },
-                password: { label: "Password", type: "password" }
-            },
-
-            authorize: (credentials: any) => {
-                if (typeof credentials.email !== "string" || typeof credentials.password !== "string") return null;
-
-                if (credentials.email === process.env.ADMIN_EMAIL && credentials.password === process.env.ADMIN_PASSWORD) return credentials;
-                throw new Error("Bad Credentials");
             }
         })
     ]
