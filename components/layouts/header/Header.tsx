@@ -28,7 +28,7 @@ export default function Header (): React.ReactElement {
     const session = useSessionData();
 
     const User = {
-        isLoggedIn: session.data?.user?.email ? true : false,
+        isLoggedIn: session.data?.user ? true : false,
         role: (session.data?.user as any)?.role
     };
 
@@ -86,7 +86,7 @@ export default function Header (): React.ReactElement {
                         </DropdownTrigger>
                         <DropdownMenu aria-label="Profile Actions" variant="flat">
                             <DropdownItem
-                                href={(User.isLoggedIn) ? "" : "/login"}
+                                href={(User.isLoggedIn) ? "/dashboard" : "/login"}
                                 key="profile"
                                 className="h-14 gap-2"
                                 color="success"
