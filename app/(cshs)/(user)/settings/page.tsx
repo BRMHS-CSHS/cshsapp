@@ -36,7 +36,7 @@ export default function Dashboard (): React.ReactElement {
                         <Stack divider={<StackDivider />} spacing="10">
                             <div className="font-bold text-xl space-y-4">
                                 <div className="flex justify-center items-center space-x-4">
-                                    <Link href="/service-history">
+                                    <Link>
                                         <Button variant="ghost" color="warning">Change Password</Button>
                                     </Link>
                                 </div>
