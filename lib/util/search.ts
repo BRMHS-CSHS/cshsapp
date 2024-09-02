@@ -15,6 +15,11 @@ export const wikiPages: SearchItem[] = [
         name: "Dashboard",
         url: "/dashboard",
         description: "The dashboard."
+    },
+    {
+        name: "Typer",
+        url: "/typer",
+        description: "The Typer Game."
     }
 ];
 
