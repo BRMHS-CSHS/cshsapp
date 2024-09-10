@@ -23,7 +23,7 @@ export default function Home (): React.ReactElement {
                         <Heading size="xl" className="font-extrabold text-3xl">Computer Science Honor Society</Heading>
                     </CardHeader>
 
-                    <CardBody>
+                    <CardBody className="text-center">
                         <Stack divider={<StackDivider />} spacing="10">
                             <Box>
                                 <Heading size="sm" textTransform="uppercase">
@@ -40,7 +40,7 @@ export default function Home (): React.ReactElement {
                                     </Highlight>
                                 </Heading>
                                 <Text pt="2" fontSize="sm">
-                                    View a summary of all your clients over the last month.
+                                    CSHS aims to
                                 </Text>
                             </Box>
                             <Box>
@@ -58,7 +58,7 @@ export default function Home (): React.ReactElement {
                                     </Highlight>
                                 </Heading>
                                 <Text pt="2" fontSize="sm">
-                                    Check out the overview of your clients.
+                                    The purpose of this organization is to encourage students’ enthusiasm for computer science, to honor academic excellence, and to promote service. Society members and advisors commit to and embody three core values: equity, service, and excellence.
                                 </Text>
                             </Box>
                             <Box>
@@ -76,7 +76,7 @@ export default function Home (): React.ReactElement {
                                     </Highlight>
                                 </Heading>
                                 <Text pt="2" fontSize="sm">
-                                    See a detailed analysis of all your business clients.
+                                    A realization that any student has the potential to enroll, grow, and excel in computing.
                                 </Text>
                             </Box>
                             <Box>
@@ -94,7 +94,7 @@ export default function Home (): React.ReactElement {
                                     </Highlight>
                                 </Heading>
                                 <Text pt="2" fontSize="sm">
-                                    See a detailed analysis of all your business clients.
+                                    Empower members to become ambassadors of the CS discipline, helping underscore its importance as a mainstay in the school and the community.
                                 </Text>
                             </Box>
                             <Box>
@@ -112,7 +112,7 @@ export default function Home (): React.ReactElement {
                                     </Highlight>
                                 </Heading>
                                 <Text pt="2" fontSize="sm">
-                                    See a detailed analysis of all your business clients.
+                                    A commitment to promoting outstanding scholarship in computer science coursework.
                                 </Text>
                             </Box>
                         </Stack>
