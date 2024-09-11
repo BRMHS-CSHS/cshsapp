@@ -100,6 +100,39 @@ export const logout = async (): Promise<any> => {
     revalidatePath("/");
 };
 
+export const getUsers = async (): Promise<any> => {
+    const users = await db.user.findMany();
+
+    let temp = {
+        id: 0,
+        email: "",
+        name: "",
+        grade: 0,
+        hours: 0,
+        status: "active"
+    };
+
+    const result: Array<typeof temp> = [];
+    for (let i = 1; i < users.length + 1; i++) {
+        temp.id = i;
+        temp.email = users[i - 1].email;
+        temp.grade = users[i - 1].grade;
+        temp.hours = users[i - 1].hours;
+        temp.name = users[i - 1].name;
+        result.push(temp);
+        temp = {
+            id: 0,
+            email: "",
+            name: "",
+            grade: 0,
+            hours: 0,
+            status: "active"
+        };
+    }
+
+    return result;
+};
+
 /**
  * @todo add change password functionality
  */

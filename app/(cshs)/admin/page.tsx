@@ -1,7 +1,12 @@
 "use client";
 
 import {
+    getUsers
+} from "@/auth/actions";
+
+import {
     useCallback,
+    useEffect,
     useMemo,
     useState
 } from "react";
@@ -31,7 +36,7 @@ import {
     Search
 } from "lucide-react";
 
-import { columns, users, statusOptions } from "@/lib/typings/user"; // temp until get data from db
+import { columns, statusOptions } from "@/lib/typings/user"; // temp until get data from db
 import { capitalize } from "@/lib/util/string";
 import { RegisterMenu } from "@/components/admin/Register";
 
@@ -43,9 +48,32 @@ const statusColorMap: Record<string, ChipProps["color"]> = {
 
 const INITIAL_VISIBLE_COLUMNS = ["name", "role", "status", "actions"];
 
-type User = typeof users[0];
+interface UserType {
+    id: number
+    email: string
+    name: string
+    grade: number
+    hours: number
+    role: string
+    team: string
+    status: string
+    age: string
+    avatar: string
+};
 
 export default function App (): React.ReactElement {
+    const [users, setUsers] = useState<UserType[]>([]);
+
+    useEffect(() => {
+        const fetchData = async (): Promise<void> => {
+            const result = await getUsers();
+            setUsers(result);
+        };
+        void fetchData();
+    }, []);
+
+    type User = UserType;
+
     const [filterValue, setFilterValue] = useState("");
     const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set([]));
     const [visibleColumns, setVisibleColumns] = useState<Selection>(new Set(INITIAL_VISIBLE_COLUMNS));
@@ -71,17 +99,17 @@ export default function App (): React.ReactElement {
 
         if (hasSearchFilter) {
             filteredUsers = filteredUsers.filter(user =>
-                user.name.toLowerCase().includes(filterValue.toLowerCase())
+                user?.name.toLowerCase().includes(filterValue.toLowerCase())
             );
         }
         if (statusFilter !== "all" && Array.from(statusFilter).length !== statusOptions.length) {
             filteredUsers = filteredUsers.filter(user =>
-                Array.from(statusFilter).includes(user.status)
+                Array.from(statusFilter).includes(user?.status)
             );
         }
 
         return filteredUsers;
-    }, [hasSearchFilter, statusFilter, filterValue]);
+    }, [users, hasSearchFilter, statusFilter, filterValue]);
 
     const pages = Math.ceil(filteredItems.length / rowsPerPage);
     const items = useMemo(() => {
@@ -92,7 +120,7 @@ export default function App (): React.ReactElement {
     }, [page, filteredItems, rowsPerPage]);
 
     const sortedItems = useMemo(() => {
-        return [...items].sort((a: User, b: User) => {
+        return [...items].sort((a: any, b: any) => {
             const first = a[sortDescriptor.column as keyof User] as number;
             const second = b[sortDescriptor.column as keyof User] as number;
             const cmp = first < second ? -1 : first > second ? 1 : 0;
@@ -241,7 +269,9 @@ export default function App (): React.ReactElement {
                     </div>
                 </div>
                 <div className="flex justify-between items-center">
-                    <span className="text-default-400 text-small">Total {users.length} users</span>
+                    {
+                    // <span className="text-default-400 text-small">Total {users.length()} users</span>
+                    }
                     <label className="flex items-center text-default-400 text-small">
                         Rows per page:
                         <select
@@ -318,7 +348,7 @@ export default function App (): React.ReactElement {
             <TableBody emptyContent="No users found" items={sortedItems}>
                 {item => (
                     <TableRow key={item.id}>
-                        {columnKey => <TableCell>{renderCell(item, columnKey)}</TableCell>}
+                        {columnKey => <TableCell>{renderCell(item as any, columnKey)}</TableCell>}
                     </TableRow>
                 )}
             </TableBody>
