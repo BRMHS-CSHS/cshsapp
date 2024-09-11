@@ -39,12 +39,12 @@ export default function Home (): React.ReactElement {
                                         Who are we?
                                     </Highlight>
                                 </Heading>
-                                <Text pt="2" fontSize="sm">
-                                    CSHS aims to
+                                <Text pt="2" fontSize="lg">
+                                    CSHS aims to promote and embody computer science and foster a community willing to abide by the three core values of equity, service, and excellence.
                                 </Text>
                             </Box>
                             <Box>
-                                <Heading size="xs" textTransform="uppercase">
+                                <Heading size="lg" textTransform="uppercase">
                                     <Highlight
                                         query="Overview"
                                         styles={{
@@ -57,7 +57,7 @@ export default function Home (): React.ReactElement {
                                         Overview
                                     </Highlight>
                                 </Heading>
-                                <Text pt="2" fontSize="sm">
+                                <Text pt="2" fontSize="lg">
                                     The purpose of this organization is to encourage students’ enthusiasm for computer science, to honor academic excellence, and to promote service. Society members and advisors commit to and embody three core values: equity, service, and excellence.
                                 </Text>
                             </Box>
@@ -75,7 +75,7 @@ export default function Home (): React.ReactElement {
                                         Equity
                                     </Highlight>
                                 </Heading>
-                                <Text pt="2" fontSize="sm">
+                                <Text pt="2" fontSize="lg">
                                     A realization that any student has the potential to enroll, grow, and excel in computing.
                                 </Text>
                             </Box>
@@ -93,7 +93,7 @@ export default function Home (): React.ReactElement {
                                         Service
                                     </Highlight>
                                 </Heading>
-                                <Text pt="2" fontSize="sm">
+                                <Text pt="2" fontSize="lg">
                                     Empower members to become ambassadors of the CS discipline, helping underscore its importance as a mainstay in the school and the community.
                                 </Text>
                             </Box>
@@ -111,7 +111,7 @@ export default function Home (): React.ReactElement {
                                         Excellence
                                     </Highlight>
                                 </Heading>
-                                <Text pt="2" fontSize="sm">
+                                <Text pt="2" fontSize="lg">
                                     A commitment to promoting outstanding scholarship in computer science coursework.
                                 </Text>
                             </Box>
