@@ -17,9 +17,15 @@ import {
     TableContainer
 } from "@chakra-ui/react";
 import { Button } from "@nextui-org/react";
-import { ReactElement, ReactNode, ReactPortal, AwaitedReactNode, Key } from "react";
 
 // import { useSessionData } from "@/lib/auth/useSessionData";
+
+interface ServiceType {
+    id: number
+    name: string
+    location: string
+    date: Date
+};
 
 export default async function Dashboard (): Promise<React.ReactElement> {
     // const session = useSessionData();
@@ -72,12 +78,18 @@ export default async function Dashboard (): Promise<React.ReactElement> {
                                                 </Tr>
                                             </Thead>
                                             <Tbody>
-                                                {services.map((service: { id: Key | null | undefined, name: string | number | bigint | boolean | ReactElement | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined, location: string | number | bigint | boolean | ReactElement | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined }) => {
+                                                {services.map((service: ServiceType) => {
+                                                    const year = service.date.getFullYear().toString();
+                                                    const month = service.date.getMonth().toString();
+                                                    const day = service.date.getDay().toString();
+
+                                                    const date = `${month}/${day}/${year} `;
+
                                                     return (
                                                         <Tr key={service.id}>
                                                             <Th className="font-normal">{service.name}</Th>
                                                             <Th className="font-normal">{service.location}</Th>
-                                                            <Th className="font-normal">Date</Th>
+                                                            <Th className="font-normal">{date}</Th>
                                                             <Td><Button type="submit" className="max-w-xs" variant="ghost" color="success">Sign up</Button></Td>
                                                         </Tr>
                                                     );
