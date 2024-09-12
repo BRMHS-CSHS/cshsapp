@@ -83,7 +83,7 @@ export default async function Dashboard (): Promise<React.ReactElement> {
                                                     const month = service.date.getMonth().toString();
                                                     const day = service.date.getDay().toString();
 
-                                                    const date = `${month}/${day}/${year} `;
+                                                    const date = `${month}/${day}/${year}`;
 
                                                     return (
                                                         <Tr key={service.id}>
