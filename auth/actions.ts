@@ -39,6 +39,33 @@ export const registerUser = async (credentials: any): Promise<string> => {
     return "Success";
 };
 
+export const registerService = async (credentials: any): Promise<string> => {
+    if (
+        typeof credentials?.name !== "string"
+        || typeof credentials?.location !== "string"
+        || !credentials?.name
+        || !credentials?.location
+        || !credentials?.date
+    ) { throw new Error("Invalid Credentials"); }
+
+    const form = {
+        name: credentials.name as string,
+        location: credentials.location as string,
+        date: credentials.date
+    };
+
+    const res = await db.services.create({
+        data: {
+            name: form.name,
+            location: form.location,
+            date: form.date
+        }
+    });
+
+    if (!res) throw new Error("Something went wrong.");
+    return "Success";
+};
+
 export const changeHours = async (
     email?: string,
     hours?: number
@@ -131,6 +158,34 @@ export const getUsers = async (): Promise<any> => {
     }
 
     return result;
+};
+
+export const getServices = async (): Promise<any> => {
+    const res = await db.services.findMany();
+
+    let temp = {
+        id: 0,
+        name: "",
+        location: "",
+        date: new Date()
+    };
+
+    const result: Array<typeof temp> = [];
+    for (let i = 0; i < res.length; i++) {
+        temp.id = i;
+        temp.name = res[i].name;
+        temp.location = res[i].location;
+        temp.date = res[i].date;
+        result.push(temp);
+        temp = {
+            id: 0,
+            name: "",
+            location: "",
+            date: new Date()
+        };
+    }
+
+    return res;
 };
 
 /**

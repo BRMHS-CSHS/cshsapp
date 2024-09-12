@@ -39,6 +39,7 @@ import {
 import { columns, statusOptions } from "@/lib/typings/user"; // temp until get data from db
 import { capitalize } from "@/lib/util/string";
 import { RegisterMenu } from "@/components/admin/Register";
+import { ServicesMenu } from "@/components/admin/Services";
 
 const statusColorMap: Record<string, ChipProps["color"]> = {
     active: "success",
@@ -265,6 +266,7 @@ export default function App (): React.ReactElement {
                                 ))}
                             </DropdownMenu>
                         </Dropdown>
+                        <ServicesMenu />
                         <RegisterMenu />
                     </div>
                 </div>

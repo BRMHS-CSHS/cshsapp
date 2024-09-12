@@ -1,5 +1,4 @@
-"use client";
-
+import { getServices } from "@/auth/actions";
 import {
     Card,
     CardHeader,
@@ -18,10 +17,11 @@ import {
     TableContainer
 } from "@chakra-ui/react";
 import { Button } from "@nextui-org/react";
+import { ReactElement, ReactNode, ReactPortal, AwaitedReactNode, Key } from "react";
 
 // import { useSessionData } from "@/lib/auth/useSessionData";
 
-export default function Dashboard (): React.ReactElement {
+export default async function Dashboard (): Promise<React.ReactElement> {
     // const session = useSessionData();
 
     /* const User = {
@@ -31,6 +31,8 @@ export default function Dashboard (): React.ReactElement {
         hours: (session.data?.user as any)?.hours,
         isLoggedIn: session.data?.user ? true : false
     }; */
+
+    const services = await getServices();
 
     return (
         <div className="flex flex-col justify-center items-center">
@@ -70,12 +72,16 @@ export default function Dashboard (): React.ReactElement {
                                                 </Tr>
                                             </Thead>
                                             <Tbody>
-                                                <Tr>
-                                                    <Td>CS Department Volunteer</Td>
-                                                    <Td>LSU</Td>
-                                                    <Td>November 4, 2024</Td>
-                                                    <Td><Button type="submit" className="max-w-xs" variant="ghost" color="success">Sign up</Button></Td>
-                                                </Tr>
+                                                {services.map((service: { id: Key | null | undefined, name: string | number | bigint | boolean | ReactElement | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined, location: string | number | bigint | boolean | ReactElement | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined }) => {
+                                                    return (
+                                                        <Tr key={service.id}>
+                                                            <Th className="font-normal">{service.name}</Th>
+                                                            <Th className="font-normal">{service.location}</Th>
+                                                            <Th className="font-normal">Date</Th>
+                                                            <Td><Button type="submit" className="max-w-xs" variant="ghost" color="success">Sign up</Button></Td>
+                                                        </Tr>
+                                                    );
+                                                })}
                                             </Tbody>
                                         </Table>
                                     </TableContainer>

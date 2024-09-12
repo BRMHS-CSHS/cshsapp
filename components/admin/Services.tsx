@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { registerUser } from "@/auth/actions";
+import { registerService } from "@/auth/actions";
 import {
     Modal,
     ModalContent,
@@ -12,24 +12,21 @@ import {
 } from "@nextui-org/react";
 import { Plus } from "lucide-react";
 import { FormControl } from "@chakra-ui/react";
+import { DatePicker } from "@nextui-org/date-picker";
 
-export const RegisterMenu = (): React.ReactElement => {
+export const ServicesMenu = (): React.ReactElement => {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
     const [name, setName] = useState("");
-    const [grade, setGrade] = useState("");
-    const [hours, setHours] = useState("");
+    const [location, setLocation] = useState("");
+    const [date, setDate] = useState<Date>();
 
     async function handleClick (): Promise<void> {
         const data = {
-            email: email,
-            password: password,
             name: name,
-            grade: grade,
-            hours: hours
+            location: location,
+            date: date
         };
-        const res = await registerUser(data);
+        const res = await registerService(data);
 
         if (res) alert(res);
     }
@@ -37,7 +34,7 @@ export const RegisterMenu = (): React.ReactElement => {
     return (
         <>
             <Button onPress={onOpen} color="primary" endContent={<Plus />}>
-                Add New
+                Add new Service
             </Button>
 
             <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
@@ -51,37 +48,19 @@ export const RegisterMenu = (): React.ReactElement => {
                                 <FormControl className="space-y-2">
                                     <Input
                                         required
-                                        type="email"
-                                        label="Email"
-                                        className="max-w-xs"
-                                        onChange={e => setEmail(e.target.value)}
-                                    />
-                                    <Input
-                                        required
-                                        type="password"
-                                        label="Password"
-                                        className="max-w-xs"
-                                        onChange={e => setPassword(e.target.value)}
-                                    />
-                                    <Input
-                                        required
                                         type="text"
                                         label="Name"
                                         className="max-w-xs"
                                         onChange={e => setName(e.target.value)}
                                     />
                                     <Input
-                                        type="number"
-                                        label="Grade"
+                                        required
+                                        type="text"
+                                        label="Location"
                                         className="max-w-xs"
-                                        onChange={e => setGrade(e.target.value)}
+                                        onChange={e => setLocation(e.target.value)}
                                     />
-                                    <Input
-                                        type="number"
-                                        label="Hours"
-                                        className="max-w-xs"
-                                        onChange={e => setHours(e.target.value)}
-                                    />
+                                    <DatePicker label="Date" className="max-w-xs" onChange={e => setDate(new Date(e.year, e.month, e.day))} />
                                 </FormControl>
                             </ModalBody>
                             <ModalFooter>

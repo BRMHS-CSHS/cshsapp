@@ -52,6 +52,7 @@
     "@mdx-js/react": "^3.0.1",
     "@next/bundle-analyzer": "^14.2.6",
     "@next/mdx": "^14.2.6",
+    "@nextui-org/date-picker": "^2.1.6",
     "@nextui-org/react": "^2.4.6",
     "@prisma/client": "^5.18.0",
     "@tanstack/react-query": "^5.52.1",
