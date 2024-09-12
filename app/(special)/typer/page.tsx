@@ -13,16 +13,16 @@ const Page = (): React.ReactElement => {
     const [seconds, setSeconds] = useState(30);
 
     useEffect(() => {
-        if (!start) return;
-        if (seconds <= 0) { // buggy
-            setSeconds(seconds + 31);
-            if (highScore < score) setHighScore(score);
-            changeScore(0);
-            setCurrentWord("start");
-            setStart(false);
-            alert("You died.");
-        }
         const interval = async (): Promise<void> => {
+            if (!start) return;
+            if (seconds <= 0) { // buggy
+                setSeconds(seconds + 31);
+                if (highScore < score) setHighScore(score);
+                changeScore(0);
+                setCurrentWord("start");
+                setStart(false);
+                alert("You died.");
+            }
             setTimeout(async () => {
                 setSeconds(seconds - 1);
             }, 1000);
