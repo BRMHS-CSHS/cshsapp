@@ -87,9 +87,9 @@ export default async function Dashboard (): Promise<React.ReactElement> {
 
                                                     return (
                                                         <Tr key={service.id}>
-                                                            <Th className="font-normal">{service.name}</Th>
-                                                            <Th className="font-normal">{service.location}</Th>
-                                                            <Th className="font-normal">{date}</Th>
+                                                            <Td>{service.name}</Td>
+                                                            <Td>{service.location}</Td>
+                                                            <Td>{date}</Td>
                                                             <Td><Button type="submit" className="max-w-xs" variant="ghost" color="success">Sign up</Button></Td>
                                                         </Tr>
                                                     );
