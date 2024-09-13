@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start -p 7979",
+    "start": "next start -p 8979",
     "lint": "eslint . --fix",
     "ci:build": "NEXT_TELEMETRY_DISABLED=1 next build",
     "ci:lint": "eslint . --max-warnings 0"
