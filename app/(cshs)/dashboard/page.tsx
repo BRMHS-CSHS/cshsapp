@@ -100,9 +100,9 @@ export default function Dashboard (): React.ReactElement {
                                             </Thead>
                                             <Tbody>
                                                 <Tr>
-                                                    <Td>CS Department Volunteer</Td>
-                                                    <Td>LSU</Td>
-                                                    <Td>November 4, 2024</Td>
+                                                    <Td></Td>
+                                                    <Td></Td>
+                                                    <Td></Td>
                                                 </Tr>
                                             </Tbody>
                                         </Table>
