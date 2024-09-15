@@ -1,10 +1,10 @@
 "use server";
 import { db } from "@/db";
-import { auth, signIn, signOut } from "@/auth";
+import { auth, signIn, signOut, hashPassword } from "@/auth";
 import { AuthError } from "next-auth";
-import { hashPassword } from "@/auth";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import bcrypt from "bcryptjs";
 
 export const registerUser = async (credentials: any): Promise<string> => {
     if (
@@ -84,7 +84,7 @@ export const changeHours = async (
     return "Success";
 };
 
-export const changeEmail = async (
+export const changeEmail = async ( // ?? fix ?
     oldEmail?: string,
     newEmail?: string
 ): Promise<string> => {
@@ -115,7 +115,7 @@ export const loginUser: any = async (credentials: any) => {
                 case "CredentialsSignin":
                     return ("Invalid Credentials");
                 default:
-                    return ("Something went wrong!");
+                    return ("Something went wrong: Bad Username or Password");
             }
         }
     }
@@ -188,6 +188,31 @@ export const getServices = async (): Promise<any> => {
     return res;
 };
 
-/**
- * @todo add change password functionality
- */
+export const changePassword = async (email: string, oldPassword: string, newPassword: string): Promise<void> => {
+    if (
+        !email
+        || typeof email !== "string"
+    ) throw new Error("Invalid Session");
+
+    if (email === process.env.ADMIN_EMAIL) throw new Error("Restricted Access");
+
+    const user = await db.user.findUnique({
+        where: {
+            email: email
+        }
+    });
+
+    if (!bcrypt.compareSync(oldPassword, user?.password!)) throw new Error("Bad Old Password");
+
+    const res = await db.user.update({
+        where: {
+            email: email
+        },
+        data: {
+            password: await hashPassword(newPassword)
+        }
+    });
+
+    if (!res) throw new Error("Something went wrong!");
+    redirect("/");
+};

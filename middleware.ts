@@ -2,7 +2,7 @@ import { auth } from "@/auth";
 import { NextRequest, NextResponse } from "next/server";
 
 const protectedRoutes_admin = ["/admin"];
-const protectedRoutes_user = ["/dashboard", "/contact_page", "/settings", "/service-history"];
+const protectedRoutes_user = ["/dashboard", "/contact_page", "/settings", "/service-history", "/change_password"];
 
 export async function middleware (req: NextRequest): Promise<any> {
     const session = (await auth());
