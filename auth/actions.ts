@@ -29,6 +29,7 @@ export const registerUser = async (credentials: any): Promise<string> => {
         data: {
             email: form.email,
             password: form.password,
+            password_initial: form.password,
             name: form.name,
             hours: form.hours,
             grade: form.grade
@@ -215,4 +216,34 @@ export const changePassword = async (email: string, oldPassword: string, newPass
 
     if (!res) throw new Error("Something went wrong!");
     redirect("/");
+};
+
+export const forgotPassword = async (email: string, password_initial: string): Promise<void> => {
+    if (
+        !email
+        || typeof email !== "string"
+        || !password_initial
+        || typeof password_initial !== "string"
+    ) throw new Error("Invalid Credentials");
+
+    const user = await db.user.findUnique({
+        where: {
+            email: email
+        }
+    });
+    if (!user) throw new Error("E-mail could not be found");
+    if (bcrypt.compareSync(password_initial, user?.password_initial as string)) {
+        const res = await db.user.update({
+            where: {
+                email: user?.email
+            },
+            data: {
+                password: user?.password_initial
+            }
+        });
+
+        if (!res) throw new Error("Something went wrong!");
+        redirect("/forgot_success");
+    }
+    throw new Error("Invalid Credentials");
 };

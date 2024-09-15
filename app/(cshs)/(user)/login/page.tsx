@@ -1,5 +1,5 @@
 "use client";
-import { Button, Input } from "@nextui-org/react";
+import { Button, Input, Link } from "@nextui-org/react";
 
 import {
     FormControl,
@@ -31,9 +31,11 @@ export default function Home (): React.ReactElement {
                     <Input type="email" label="Email" className="max-w-xs" onChange={e => setEmail(e.target.value)} />
                     <Input type="password" label="Password" className="max-w-xs" onChange={e => setPassword(e.target.value)} />
 
-                    <Button type="submit" className="max-w-xs" color="success" variant="ghost" onPress={handleClick}>Submit</Button>
+                    <Button type="submit" className="max-w-xs" color="success" variant="ghost" onPress={handleClick}>Login</Button>
                 </FormControl>
-                <Button type="submit" className="max-w-xs" variant="ghost" color="danger">Forgot Password?</Button>
+                <Link className="flex justify-center" href="/forgot_password">
+                    <Button type="submit" className="max-w-xs" variant="ghost" color="danger">Forgot Password?</Button>
+                </Link>
             </section>
         </div>
     );
