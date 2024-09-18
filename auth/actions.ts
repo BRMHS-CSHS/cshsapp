@@ -129,7 +129,9 @@ export const logout = async (): Promise<any> => {
 };
 
 export const getUsers = async (): Promise<any> => {
-    const users = await db.user.findMany();
+    const users = await db.user.findMany({
+        where: { role: "User" }
+    });
 
     let temp = {
         id: 0,
@@ -165,28 +167,37 @@ export const getServices = async (): Promise<any> => {
     const res = await db.services.findMany();
 
     let temp = {
+        m_id: "",
         id: 0,
         name: "",
         location: "",
-        date: new Date()
+        date: ""
     };
 
     const result: Array<typeof temp> = [];
     for (let i = 0; i < res.length; i++) {
-        temp.id = i;
+        const year = res[i].date.getFullYear().toString();
+        const month = res[i].date.getMonth().toString();
+        const day = res[i].date.getDay().toString();
+
+        const date = `${month}/${day}/${year}`;
+
+        temp.id = i + 1;
+        temp.m_id = res[i].id;
         temp.name = res[i].name;
         temp.location = res[i].location;
-        temp.date = res[i].date;
+        temp.date = date;
         result.push(temp);
         temp = {
+            m_id: "",
             id: 0,
             name: "",
             location: "",
-            date: new Date()
+            date: ""
         };
     }
 
-    return res;
+    return result;
 };
 
 export const changePassword = async (email: string, oldPassword: string, newPassword: string): Promise<void> => {
@@ -232,7 +243,7 @@ export const forgotPassword = async (email: string, password_initial: string): P
         }
     });
     if (!user) throw new Error("E-mail could not be found");
-    if (bcrypt.compareSync(password_initial, user?.password_initial as string)) {
+    if (bcrypt.compareSync(password_initial, user?.password_initial)) {
         const res = await db.user.update({
             where: {
                 email: user?.email
@@ -246,4 +257,38 @@ export const forgotPassword = async (email: string, password_initial: string): P
         redirect("/forgot_success");
     }
     throw new Error("Invalid Credentials");
+};
+
+// administrator methods
+
+export const deleteUser = async (email: string): Promise<any> => {
+    if (
+        !email
+        || typeof email !== "string"
+    ) throw new Error("Invalid Credentials");
+
+    const res = await db.user.delete({
+        where: {
+            email: email
+        }
+    });
+
+    if (!res) throw new Error("Something went wrong");
+    return res;
+};
+
+export const deleteService = async (id: string): Promise<any> => {
+    if (
+        !id
+        || typeof id !== "string"
+    ) throw new Error("Invalid Credentials");
+
+    const res = await db.services.delete({
+        where: {
+            id: id
+        }
+    });
+
+    if (!res) throw new Error("Something went wrong");
+    return res;
 };

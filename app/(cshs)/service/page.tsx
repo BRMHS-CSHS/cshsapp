@@ -20,11 +20,11 @@ import { Button } from "@nextui-org/react";
 
 // import { useSessionData } from "@/lib/auth/useSessionData";
 
-interface ServiceType {
+type ServiceType = {
     id: number
     name: string
     location: string
-    date: Date
+    date: string
 };
 
 export default async function Dashboard (): Promise<React.ReactElement> {
@@ -79,17 +79,11 @@ export default async function Dashboard (): Promise<React.ReactElement> {
                                             </Thead>
                                             <Tbody>
                                                 {services.map((service: ServiceType) => {
-                                                    const year = service.date.getFullYear().toString();
-                                                    const month = service.date.getMonth().toString();
-                                                    const day = service.date.getDay().toString();
-
-                                                    const date = `${month}/${day}/${year}`;
-
                                                     return (
                                                         <Tr key={service.id}>
                                                             <Td>{service.name}</Td>
                                                             <Td>{service.location}</Td>
-                                                            <Td>{date}</Td>
+                                                            <Td>{service.date}</Td>
                                                             <Td><Button type="submit" className="max-w-xs" variant="ghost" color="success">Sign up</Button></Td>
                                                         </Tr>
                                                     );
