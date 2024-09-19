@@ -328,3 +328,53 @@ export const changeHours = async (email: string, hours: number): Promise<string>
     if (!res) throw new Error("No email associated.");
     return "Success";
 };
+
+export const changeName_Service = async (id: string, name: string): Promise<string> => {
+    if (
+        !id
+        || typeof id !== "string"
+        || !name
+        || typeof name !== "string"
+    ) throw new Error("Invalid Credentials");
+
+    const res = await db.services.update({
+        where: { id: id },
+        data: { name: name }
+    });
+
+    if (!res) throw new Error("No email associated.");
+    return "Success";
+};
+
+export const changeLocation_Service = async (id: string, location: string): Promise<string> => {
+    if (
+        !id
+        || typeof id !== "string"
+        || !location
+        || typeof location !== "string"
+    ) throw new Error("Invalid Credentials");
+
+    const res = await db.services.update({
+        where: { id: id },
+        data: { location: location }
+    });
+
+    if (!res) throw new Error("No email associated.");
+    return "Success";
+};
+
+export const changeDate_Service = async (id: string, date: Date): Promise<string> => {
+    if (
+        !id
+        || typeof id !== "string"
+        || !date
+    ) throw new Error("Invalid Credentials");
+
+    const res = await db.services.update({
+        where: { id: id },
+        data: { date: date }
+    });
+
+    if (!res) throw new Error("No email associated.");
+    return "Success";
+};

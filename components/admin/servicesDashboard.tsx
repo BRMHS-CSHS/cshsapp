@@ -39,6 +39,9 @@ import {
 import { statusOptions } from "@/lib/typings/user";
 import { capitalize } from "@/lib/util/string";
 import { ServicesMenu } from "@/components/admin/Services";
+import { EditDateMenu } from "./service_dashboard/EditDate";
+import { EditLocationMenu } from "./service_dashboard/EditLocation";
+import { EditNameMenu_Services } from "./service_dashboard/EditName";
 
 const columns = [
     { name: "ID", uid: "id", sortable: true },
@@ -174,7 +177,9 @@ const ServicesDashboard = (): React.ReactElement => {
                                 </Button>
                             </DropdownTrigger>
                             <DropdownMenu>
-                                <DropdownItem>Edit</DropdownItem>
+                                <DropdownItem isReadOnly> <EditDateMenu id={user.m_id}></EditDateMenu> </DropdownItem>
+                                <DropdownItem isReadOnly> <EditLocationMenu id={user.m_id}></EditLocationMenu> </DropdownItem>
+                                <DropdownItem isReadOnly> <EditNameMenu_Services id={user.m_id}></EditNameMenu_Services> </DropdownItem>
                                 <DropdownItem onClick={pressDelete} data-m_id={user.m_id}>Delete</DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
