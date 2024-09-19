@@ -5,7 +5,7 @@ import {
     getUsers
 } from "@/auth/actions";
 
-import {
+import React, {
     SyntheticEvent,
     useCallback,
     useEffect,
@@ -39,6 +39,10 @@ import {
 import { statusOptions } from "@/lib/typings/user";
 import { capitalize } from "@/lib/util/string";
 import { RegisterMenu } from "@/components/admin/Register";
+import { EditEmailMenu } from "./user_dashboard/EditEmail";
+import { EditGradeMenu } from "./user_dashboard/EditGrade";
+import { EditHoursMenu } from "./user_dashboard/EditHours";
+import { EditNameMenu } from "./user_dashboard/EditName";
 
 const columns = [
     { name: "ID", uid: "id", sortable: true },
@@ -169,8 +173,11 @@ const UserDash = (): React.ReactElement => {
                                 </Button>
                             </DropdownTrigger>
                             <DropdownMenu>
-                                <DropdownItem>Edit</DropdownItem>
-                                <DropdownItem onClick={pressDelete} data-email={user.email}>Delete</DropdownItem>
+                                <DropdownItem isReadOnly> <EditEmailMenu email={user.email}></EditEmailMenu> </DropdownItem>
+                                <DropdownItem isReadOnly> <EditNameMenu email={user.email}></EditNameMenu> </DropdownItem>
+                                <DropdownItem isReadOnly> <EditGradeMenu email={user.email}></EditGradeMenu> </DropdownItem>
+                                <DropdownItem isReadOnly> <EditHoursMenu email={user.email}></EditHoursMenu> </DropdownItem>
+                                <DropdownItem onClick={pressDelete} data-email={user.email} color="danger">Delete</DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
                     </div>

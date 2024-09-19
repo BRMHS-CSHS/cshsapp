@@ -1,6 +1,6 @@
 "use server";
 import { db } from "@/db";
-import { auth, signIn, signOut, hashPassword } from "@/auth";
+import { signIn, signOut, hashPassword } from "@/auth";
 import { AuthError } from "next-auth";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
@@ -64,39 +64,6 @@ export const registerService = async (credentials: any): Promise<string> => {
     });
 
     if (!res) throw new Error("Something went wrong.");
-    return "Success";
-};
-
-export const changeHours = async (
-    email?: string,
-    hours?: number
-): Promise<string> => {
-    if (!email || !hours) throw new Error("Invalid parameters.");
-
-    const admin = await auth();
-    if (admin?.user?.email !== process.env.ADMIN_EMAIL) { throw new Error("Unauthorized"); }
-
-    const user = await db.user.update({
-        where: { email: email },
-        data: { hours: hours }
-    });
-
-    if (!user) throw new Error("No email associated.");
-    return "Success";
-};
-
-export const changeEmail = async ( // ?? fix ?
-    oldEmail?: string,
-    newEmail?: string
-): Promise<string> => {
-    if (!oldEmail || !newEmail) throw new Error("Invalid parameters.");
-
-    const user = await db.user.update({
-        where: { email: oldEmail },
-        data: { email: newEmail }
-    });
-
-    if (!user) throw new Error("No email associated.");
     return "Success";
 };
 
@@ -200,6 +167,7 @@ export const getServices = async (): Promise<any> => {
     return result;
 };
 
+// user method
 export const changePassword = async (email: string, oldPassword: string, newPassword: string): Promise<void> => {
     if (
         !email
@@ -291,4 +259,72 @@ export const deleteService = async (id: string): Promise<any> => {
 
     if (!res) throw new Error("Something went wrong");
     return res;
+};
+
+export const changeEmail = async (oldEmail: string, newEmail: string): Promise<string> => {
+    if (
+        !oldEmail
+        || typeof oldEmail !== "string"
+        || !newEmail
+        || typeof newEmail !== "string"
+    ) throw new Error("Invalid Credentials");
+
+    const res = await db.user.update({
+        where: { email: oldEmail },
+        data: { email: newEmail }
+    });
+
+    if (!res) throw new Error("No email associated.");
+    return "Success";
+};
+
+export const changeName = async (email: string, name: string): Promise<string> => {
+    if (
+        !email
+        || typeof email !== "string"
+        || !name
+        || typeof name !== "string"
+    ) throw new Error("Invalid Credentials");
+
+    const res = await db.user.update({
+        where: { email: email },
+        data: { name: name }
+    });
+
+    if (!res) throw new Error("No email associated.");
+    return "Success";
+};
+
+export const changeGrade = async (email: string, grade: number): Promise<string> => {
+    if (
+        !email
+        || typeof email !== "string"
+        || !grade
+        || typeof grade !== "number"
+    ) throw new Error("Invalid Credentials");
+
+    const res = await db.user.update({
+        where: { email: email },
+        data: { grade: grade }
+    });
+
+    if (!res) throw new Error("No email associated.");
+    return "Success";
+};
+
+export const changeHours = async (email: string, hours: number): Promise<string> => {
+    if (
+        !email
+        || typeof email !== "string"
+        || !hours
+        || typeof hours !== "number"
+    ) throw new Error("Invalid Credentials");
+
+    const res = await db.user.update({
+        where: { email: email },
+        data: { hours: hours }
+    });
+
+    if (!res) throw new Error("No email associated.");
+    return "Success";
 };
