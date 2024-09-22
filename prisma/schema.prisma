@@ -24,6 +24,8 @@ model User {
   grade    Int
   hours Int @default(0)
 
+  services String[] @default([""])
+
   Authenticator Authenticator[]
   Account       Account[]
   sessions      Session[]

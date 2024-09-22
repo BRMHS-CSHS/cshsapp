@@ -227,6 +227,37 @@ export const forgotPassword = async (email: string, password_initial: string): P
     throw new Error("Invalid Credentials");
 };
 
+export const addService = async (userEmail: string, serviceId: string): Promise<any> => {
+    if (
+        !userEmail
+        || typeof userEmail !== "string"
+        || !serviceId
+        || typeof serviceId !== "string"
+    ) throw new Error("Something went wrong!");
+
+    const user = await db.user.findFirst({
+        where: {
+            email: userEmail
+        }
+    });
+
+    const services = user?.services;
+    for (const service in services) if (serviceId === service) return;
+    services?.push(serviceId);
+
+    const res = await db.user.update({
+        where: {
+            email: userEmail
+        },
+        data: {
+            services: services
+        }
+    });
+
+    if (!res) throw new Error("Something went wrong!");
+    return res;
+};
+
 // administrator methods
 
 export const deleteUser = async (email: string): Promise<any> => {

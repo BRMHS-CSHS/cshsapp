@@ -1,4 +1,7 @@
-import { getServices } from "@/auth/actions";
+"use client";
+
+import { addService, getServices } from "@/auth/actions";
+import { useSessionData } from "@/lib/auth/useSessionData";
 import {
     Card,
     CardHeader,
@@ -17,28 +20,36 @@ import {
     TableContainer
 } from "@chakra-ui/react";
 import { Button } from "@nextui-org/react";
+import { SyntheticEvent, useMemo, useState } from "react";
 
 // import { useSessionData } from "@/lib/auth/useSessionData";
 
 type ServiceType = {
+    m_id: string
     id: number
     name: string
     location: string
     date: string
 };
 
-export default async function Dashboard (): Promise<React.ReactElement> {
-    // const session = useSessionData();
+export default function Dashboard (): React.ReactElement {
+    const session = useSessionData();
+    const [services, setServices] = useState<ServiceType[]>();
 
-    /* const User = {
-        name: session.data?.user?.name,
-        email: session.data?.user?.email,
-        role: (session.data?.user as any)?.role,
-        hours: (session.data?.user as any)?.hours,
-        isLoggedIn: session.data?.user ? true : false
-    }; */
+    useMemo((): void => {
+        const fetchData = async (): Promise<void> => {
+            const result = await getServices();
+            setServices(result);
+        };
+        void fetchData();
+    }, []);
 
-    const services = await getServices();
+    const handleSubmit = async (e: SyntheticEvent): Promise<void> => {
+        const id = e.currentTarget.getAttribute("data-m_id");
+
+        const res = await addService(session.data?.user?.email!, id!);
+        if (res) alert("Service Added");
+    };
 
     return (
         <div className="flex flex-col justify-center items-center">
@@ -78,13 +89,13 @@ export default async function Dashboard (): Promise<React.ReactElement> {
                                                 </Tr>
                                             </Thead>
                                             <Tbody>
-                                                {services.map((service: ServiceType) => {
+                                                {services?.map(service => {
                                                     return (
                                                         <Tr key={service.id}>
                                                             <Td>{service.name}</Td>
                                                             <Td>{service.location}</Td>
                                                             <Td>{service.date}</Td>
-                                                            <Td><Button type="submit" className="max-w-xs" variant="ghost" color="success">Sign up</Button></Td>
+                                                            <Td><Button type="submit" className="max-w-xs" variant="ghost" color="success" data-m_id={service.m_id} onClick={handleSubmit}>Sign up</Button></Td>
                                                         </Tr>
                                                     );
                                                 })}

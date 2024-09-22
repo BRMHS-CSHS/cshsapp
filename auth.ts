@@ -25,29 +25,34 @@ export const hashPassword = (password: string): Promise<string> => bcrypt.hash(p
 
 export interface AuthUser extends User {
     hours: number
+    role: string
+    services: string[]
 }
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
     adapter: PrismaAdapter(db),
     session: { strategy: "jwt" },
     callbacks: {
-        session: async ({ session, token = null }) => {
+        async session ({ session, token }: { session: any, token: any }) {
             // if it exists, which it doesn't. will replace later.
+
             if (token) {
                 session.user.email = token.email!;
                 session.user.name = token.name;
-                (session.user as any).hours = token.hours;
-                (session.user as any).role = token.role;
+                session.user.hours = token.hours;
+                session.user.role = token.role;
+                session.user.services = token.services;
             }
 
             return session;
         },
-        jwt: async ({ token, user }) => {
+        async jwt ({ token, user }: { token: any, user: any }) {
             if (user) {
                 token.email = user.email;
                 token.name = user.name;
-                token.hours = (user as any).hours;
-                token.role = (user as any).role;
+                token.hours = user.hours;
+                token.role = user.role;
+                token.services = user.services;
             }
 
             return token;
