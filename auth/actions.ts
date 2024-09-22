@@ -242,7 +242,7 @@ export const addService = async (userEmail: string, serviceId: string): Promise<
     });
 
     const services = user?.services;
-    for (const service in services) if (serviceId === service) return;
+    for (const service of services!) if (serviceId === service) return;
     services?.push(serviceId);
 
     const res = await db.user.update({
@@ -256,6 +256,34 @@ export const addService = async (userEmail: string, serviceId: string): Promise<
 
     if (!res) throw new Error("Something went wrong!");
     return res;
+};
+
+export const getUserService = async (serviceId: string, index = 0): Promise<any> => {
+    if (
+        typeof serviceId !== "string"
+    ) throw new Error("Something went wrong!");
+    if (!serviceId) return null;
+
+    const res = await db.services.findFirst({
+        where: {
+            id: serviceId
+        }
+    });
+
+    const year = res?.date.getFullYear().toString();
+    const month = res?.date.getMonth().toString();
+    const day = res?.date.getDay().toString();
+    const date = `${month}/${day}/${year}`;
+
+    const result = {
+        m_id: res?.id,
+        id: index,
+        name: res?.name,
+        location: res?.location,
+        date: date
+    };
+
+    return result;
 };
 
 // administrator methods

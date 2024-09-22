@@ -45,7 +45,7 @@ export default function RootLayout ({ children }: { children: React.ReactNode })
                             <NextUIProvider>
                                 <ChakraBaseProvider>
                                     <Header />
-                                    <main className="dark container mb-32 sm:mt-32 mt-8 mx-auto">
+                                    <main className="dark container mb-auto sm:mt-32 mt-8 mx-auto">
                                         {children}
                                     </main>
                                     <Footer />

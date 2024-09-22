@@ -21,17 +21,38 @@ import {
 import { Button } from "@nextui-org/react";
 import { Link } from "@nextui-org/react";
 import { useSessionData } from "@/lib/auth/useSessionData";
+import { useEffect, useState } from "react";
+import { getUserService } from "@/auth/actions";
+
+type ServiceType = {
+    m_id: string
+    id: number
+    name: string
+    location: string
+    date: string
+};
 
 export default function Dashboard (): React.ReactElement {
     const session = useSessionData(); // guarenteed to be non-null
+    const [services, setServices] = useState<ServiceType[]>();
 
     const User = {
         name: session.data?.user?.name,
         email: session.data?.user?.email,
         role: (session.data?.user as any)?.role,
         hours: (session.data?.user as any)?.hours,
-        isLoggedIn: session.data?.user ? true : false
+        isLoggedIn: session.data?.user ? true : false,
+        services: (session.data?.user as any)?.services as string[]
     };
+
+    useEffect((): void => {
+        const fetchData = async (): Promise<void> => {
+            const res: ServiceType[] = [];
+            for (let i = 1; i < User.services?.length; i++) res.push(await getUserService(User.services[i], i));
+            setServices(res);
+        };
+        void fetchData();
+    }, [User.services]);
 
     return (
         <div className="flex flex-col justify-center items-center">
@@ -99,11 +120,16 @@ export default function Dashboard (): React.ReactElement {
                                                 </Tr>
                                             </Thead>
                                             <Tbody>
-                                                <Tr>
-                                                    <Td></Td>
-                                                    <Td></Td>
-                                                    <Td></Td>
-                                                </Tr>
+                                                {services?.map(service => {
+                                                    return (
+                                                        <Tr key={service.id}>
+                                                            <Td>{service.name}</Td>
+                                                            <Td>{service.location}</Td>
+                                                            <Td>{service.date}</Td>
+                                                            <Td><Button type="submit" className="max-w-xs" variant="ghost" color="danger" data-m_id={service.m_id}>Remove</Button></Td>
+                                                        </Tr>
+                                                    );
+                                                })}
                                             </Tbody>
                                         </Table>
                                     </TableContainer>

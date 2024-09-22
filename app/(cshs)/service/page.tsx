@@ -49,6 +49,7 @@ export default function Dashboard (): React.ReactElement {
 
         const res = await addService(session.data?.user?.email!, id!);
         if (res) alert("Service Added");
+        else alert("Service Already Added");
     };
 
     return (
