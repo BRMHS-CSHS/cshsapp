@@ -22,9 +22,11 @@ model User {
 
   name     String
   grade    Int
-  hours Int @default(0)
+  hours    Int @default(0)
 
   services String[] @default([""])
+
+  high_score  Int @default(0)
 
   Authenticator Authenticator[]
   Account       Account[]

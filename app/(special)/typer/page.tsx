@@ -1,46 +1,73 @@
 "use client";
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Text, Input, Highlight } from "@chakra-ui/react";
+import { useSessionData } from "@/lib/auth/useSessionData";
+import { changeHighScore } from "@/auth/actions";
 
 const Page = (): React.ReactElement => {
+    const session = useSessionData();
+
+    const User = {
+        id: session.data?.user?.id,
+        high_score: (session.data?.user as any)?.high_score
+    };
+
     const [curText, changeCurText] = useState("");
     const [cword, changeCWord] = useState(0);
     const [score, changeScore] = useState(-1);
-    const [highScore, setHighScore] = useState(0);
+    const [highScore, setHighScore] = useState<number>(0);
     const [words, setWords] = useState([]);
     const [currentWord, setCurrentWord] = useState("start");
     const [start, setStart] = useState(false);
     const [seconds, setSeconds] = useState(30);
 
-    useEffect(() => {
+    const timeout = setTimeout(() => {
         const interval = async (): Promise<void> => {
-            if (!start) return;
-            if (seconds <= 0) { // buggy
-                setSeconds(seconds + 31);
-                if (highScore < score) setHighScore(score);
-                changeScore(0);
-                setCurrentWord("start");
+            if (seconds <= 0) {
                 setStart(false);
-                alert("You died.");
+                changeScore(-1);
+                setCurrentWord("start");
+                setSeconds(30);
+                clearTimeout(timeout);
+                return;
             }
-            setTimeout(async () => {
-                setSeconds(seconds - 1);
-            }, 1000);
+            if (start) {
+                /* buggy
+                if (correct) {
+                    setSeconds(() => seconds + 2);
+                    setCorrect(() => false);
+                }
+                */
+                setSeconds(() => seconds - 1);
+            }
         };
         void interval();
-    }, [start, seconds, highScore, score]);
+    }, 1000);
+
+    useEffect((): void => {
+        const checkScore = async (): Promise<void> => {
+            console.log(highScore < score);
+            if (highScore < score && !start) {
+                setHighScore(score);
+                await changeHighScore(User.id!, highScore);
+            };
+        };
+        void checkScore();
+    }, [highScore, score, User.id, start]);
 
     useMemo((): void => {
+        setHighScore(() => User.high_score);
         const fetchData = async (): Promise<void> => {
             const result = await (await fetch("https://random-word-api.vercel.app/api?words=500")).json();
             setWords(result);
         };
         void fetchData();
-    }, []);
+    }, [User.high_score]);
 
     const handleChange = (e: any): void => {
         changeCurText(() => e.target.value);
         if (curText == currentWord) {
+            // setCorrect(() => true);
             setStart(true);
             changeScore(score + 1);
             changeCWord(Math.floor(Math.random() * words.length));

@@ -37,22 +37,26 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             // if it exists, which it doesn't. will replace later.
 
             if (token) {
+                session.user.id = token.id;
                 session.user.email = token.email!;
                 session.user.name = token.name;
                 session.user.hours = token.hours;
                 session.user.role = token.role;
                 session.user.services = token.services;
+                session.user.high_score = token.high_score;
             }
 
             return session;
         },
         async jwt ({ token, user }: { token: any, user: any }) {
             if (user) {
+                token.id = user.id;
                 token.email = user.email;
                 token.name = user.name;
                 token.hours = user.hours;
                 token.role = user.role;
                 token.services = user.services;
+                token.high_score = user.high_score;
             }
 
             return token;

@@ -286,6 +286,25 @@ export const getUserService = async (serviceId: string, index = 0): Promise<any>
     return result;
 };
 
+export const changeHighScore = async (userId: string, high_score: number): Promise<any> => {
+    if (
+        !userId
+        || typeof userId !== "string"
+        || typeof high_score !== "number"
+    ) throw new Error("Something went wrong!");
+
+    const res = await db.user.update({
+        where: {
+            id: userId
+        },
+        data: {
+            high_score: high_score
+        }
+    });
+
+    return res;
+};
+
 // administrator methods
 
 export const deleteUser = async (email: string): Promise<any> => {
