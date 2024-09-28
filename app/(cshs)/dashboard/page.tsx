@@ -21,8 +21,8 @@ import {
 import { Button } from "@nextui-org/react";
 import { Link } from "@nextui-org/react";
 import { useSessionData } from "@/lib/auth/useSessionData";
-import { useEffect, useState } from "react";
-import { getUserService } from "@/auth/actions";
+import { SyntheticEvent, useEffect, useState } from "react";
+import { getUserService, removeService } from "@/auth/actions";
 
 type ServiceType = {
     m_id: string
@@ -53,6 +53,11 @@ export default function Dashboard (): React.ReactElement {
         };
         void fetchData();
     }, [User.services]);
+
+    const handleClick = async (e: SyntheticEvent): Promise<void> => {
+        const res = await removeService(User.email!, e.currentTarget.getAttribute("data-m_id")!);
+        if (res) alert("Service Removed");
+    };
 
     return (
         <div className="flex flex-col justify-center items-center">
@@ -126,7 +131,7 @@ export default function Dashboard (): React.ReactElement {
                                                             <Td>{service.name}</Td>
                                                             <Td>{service.location}</Td>
                                                             <Td>{service.date}</Td>
-                                                            <Td><Button type="submit" className="max-w-xs" variant="ghost" color="danger" data-m_id={service.m_id}>Remove</Button></Td>
+                                                            <Td><Button type="submit" className="max-w-xs" variant="ghost" color="danger" data-m_id={service.m_id} onClick={handleClick}>Remove</Button></Td>
                                                         </Tr>
                                                     );
                                                 })}

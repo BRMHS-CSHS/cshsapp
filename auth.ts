@@ -33,30 +33,30 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     adapter: PrismaAdapter(db),
     session: { strategy: "jwt" },
     callbacks: {
-        async session ({ session, token }: { session: any, token: any }) {
+        session: async ({ session, token = null }) => {
             // if it exists, which it doesn't. will replace later.
 
             if (token) {
-                session.user.id = token.id;
+                (session.user as any).id = token.id;
                 session.user.email = token.email!;
                 session.user.name = token.name;
-                session.user.hours = token.hours;
-                session.user.role = token.role;
-                session.user.services = token.services;
-                session.user.high_score = token.high_score;
+                (session.user as any).hours = token.hours;
+                (session.user as any).role = token.role;
+                (session.user as any).services = token.services;
+                (session.user as any).high_score = token.high_score;
             }
 
             return session;
         },
-        async jwt ({ token, user }: { token: any, user: any }) {
+        jwt: async ({ token, user }) => {
             if (user) {
                 token.id = user.id;
                 token.email = user.email;
                 token.name = user.name;
-                token.hours = user.hours;
-                token.role = user.role;
-                token.services = user.services;
-                token.high_score = user.high_score;
+                token.hours = (user as any).hours;
+                token.role = (user as any).role;
+                token.services = (user as any).services;
+                token.high_score = (user as any).high_score;
             }
 
             return token;

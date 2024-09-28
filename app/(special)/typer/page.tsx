@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Text, Input, Highlight } from "@chakra-ui/react";
 import { useSessionData } from "@/lib/auth/useSessionData";
 import { changeHighScore } from "@/auth/actions";
@@ -24,6 +24,10 @@ const Page = (): React.ReactElement => {
     const timeout = setTimeout(() => {
         const interval = async (): Promise<void> => {
             if (seconds <= 0) {
+                if (highScore < score) {
+                    setHighScore(score);
+                    await changeHighScore(User.id, score);
+                };
                 setStart(false);
                 changeScore(-1);
                 setCurrentWord("start");
@@ -43,17 +47,6 @@ const Page = (): React.ReactElement => {
         };
         void interval();
     }, 1000);
-
-    useEffect((): void => {
-        const checkScore = async (): Promise<void> => {
-            console.log(highScore < score);
-            if (highScore < score && !start) {
-                setHighScore(score);
-                await changeHighScore(User.id!, highScore);
-            };
-        };
-        void checkScore();
-    }, [highScore, score, User.id, start]);
 
     useMemo((): void => {
         setHighScore(() => User.high_score);

@@ -258,6 +258,38 @@ export const addService = async (userEmail: string, serviceId: string): Promise<
     return res;
 };
 
+export const removeService = async (userEmail: string, serviceId: string): Promise<any> => {
+    if (
+        !userEmail
+        || typeof userEmail !== "string"
+        || !serviceId
+        || typeof serviceId !== "string"
+    ) throw new Error("Something went wrong!");
+
+    const user = await db.user.findFirst({
+        where: {
+            email: userEmail
+        }
+    });
+
+    const services = user?.services;
+    for (let i = 0; i < services?.length!; i++) {
+        if (serviceId === services![i]) services?.splice(i, 1);
+    }
+
+    const res = await db.user.update({
+        where: {
+            email: userEmail
+        },
+        data: {
+            services: services
+        }
+    });
+
+    if (!res) throw new Error("Something went wrong!");
+    return res;
+};
+
 export const getUserService = async (serviceId: string, index = 0): Promise<any> => {
     if (
         typeof serviceId !== "string"
@@ -286,12 +318,15 @@ export const getUserService = async (serviceId: string, index = 0): Promise<any>
     return result;
 };
 
-export const changeHighScore = async (userId: string, high_score: number): Promise<any> => {
+export const changeHighScore = async (userId: string | undefined, high_score: number): Promise<any> => {
+    if (
+        typeof high_score !== "number"
+    ) throw new Error("Something went wrong!");
+
     if (
         !userId
         || typeof userId !== "string"
-        || typeof high_score !== "number"
-    ) throw new Error("Something went wrong!");
+    ) return;
 
     const res = await db.user.update({
         where: {
@@ -302,6 +337,7 @@ export const changeHighScore = async (userId: string, high_score: number): Promi
         }
     });
 
+    revalidatePath("/typer");
     return res;
 };
 
