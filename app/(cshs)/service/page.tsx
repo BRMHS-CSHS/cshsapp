@@ -19,7 +19,6 @@ import {
     Td,
     TableContainer
 } from "@chakra-ui/react";
-import { Button } from "@nextui-org/react";
 import { SyntheticEvent, useMemo, useState } from "react";
 
 // import { useSessionData } from "@/lib/auth/useSessionData";
@@ -43,14 +42,6 @@ export default function Dashboard (): React.ReactElement {
         };
         void fetchData();
     }, []);
-
-    const handleSubmit = async (e: SyntheticEvent): Promise<void> => {
-        const id = e.currentTarget.getAttribute("data-m_id");
-
-        const res = await addService(session.data?.user?.email!, id!);
-        if (res) alert("Service Added");
-        else alert("Service Already Added");
-    };
 
     return (
         <div className="flex flex-col justify-center items-center">
@@ -96,7 +87,6 @@ export default function Dashboard (): React.ReactElement {
                                                             <Td>{service.name}</Td>
                                                             <Td>{service.location}</Td>
                                                             <Td>{service.date}</Td>
-                                                            <Td><Button type="submit" className="max-w-xs" variant="ghost" color="success" data-m_id={service.m_id} onClick={handleSubmit}>Sign up</Button></Td>
                                                         </Tr>
                                                     );
                                                 })}

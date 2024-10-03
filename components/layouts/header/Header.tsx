@@ -98,7 +98,6 @@ export default function Header (): React.ReactElement {
                             <DropdownItem key="admin_page" href="/admin" hidden={User.role == "Admin" ? false : true}>Admin Page</DropdownItem>
                             <DropdownItem key="settings" href="/settings" color="warning">My Settings</DropdownItem>
                             <DropdownItem key="service_opp" href="/service" color="success">Service Opportunities</DropdownItem>
-                            <DropdownItem key="service_hist" href="/service-history" color="success">Service History</DropdownItem>
                             <DropdownItem key="logout" color="danger" hidden={!(User.isLoggedIn)} onAction={handleLogout}> Log Out </DropdownItem>
                         </DropdownMenu>
                     </Dropdown>

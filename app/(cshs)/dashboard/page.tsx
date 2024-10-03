@@ -89,8 +89,8 @@ export default function Dashboard (): React.ReactElement {
                                     </Text>
                                 </div>
                                 <div className="flex justify-center items-center space-x-4">
-                                    <Link href="/service-history">
-                                        <Button variant="ghost" color="primary">History</Button>
+                                    <Link href="/settings">
+                                        <Button variant="ghost" color="warning">Settings</Button>
                                     </Link>
                                     <Link href="/service">
                                         <Button variant="ghost" color="success">Opportunities</Button>
@@ -131,7 +131,6 @@ export default function Dashboard (): React.ReactElement {
                                                             <Td>{service.name}</Td>
                                                             <Td>{service.location}</Td>
                                                             <Td>{service.date}</Td>
-                                                            <Td><Button type="submit" className="max-w-xs" variant="ghost" color="danger" data-m_id={service.m_id} onClick={handleClick}>Remove</Button></Td>
                                                         </Tr>
                                                     );
                                                 })}

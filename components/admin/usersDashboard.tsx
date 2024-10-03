@@ -43,6 +43,7 @@ import { EditEmailMenu } from "./user_dashboard/EditEmail";
 import { EditGradeMenu } from "./user_dashboard/EditGrade";
 import { EditHoursMenu } from "./user_dashboard/EditHours";
 import { EditNameMenu } from "./user_dashboard/EditName";
+import { EditServicesMenu } from "./user_dashboard/EditServices";
 
 const columns = [
     { name: "ID", uid: "id", sortable: true },
@@ -177,6 +178,7 @@ const UserDash = (): React.ReactElement => {
                                 <DropdownItem isReadOnly> <EditNameMenu email={user.email}></EditNameMenu> </DropdownItem>
                                 <DropdownItem isReadOnly> <EditGradeMenu email={user.email}></EditGradeMenu> </DropdownItem>
                                 <DropdownItem isReadOnly> <EditHoursMenu email={user.email}></EditHoursMenu> </DropdownItem>
+                                <DropdownItem isReadOnly> <EditServicesMenu email={user.email}></EditServicesMenu> </DropdownItem>
                                 <DropdownItem onClick={pressDelete} data-email={user.email} color="danger">Delete</DropdownItem>
                             </DropdownMenu>
                         </Dropdown>

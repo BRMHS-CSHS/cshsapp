@@ -290,6 +290,23 @@ export const removeService = async (userEmail: string, serviceId: string): Promi
     return res;
 };
 
+export const getUserServiceIds = async (email: string): Promise<any> => {
+    if (
+        !email
+        || typeof email !== "string"
+    ) throw new Error("Something went wrong!");
+    if (!email) return null;
+
+    const services = (await db.user.findFirst({
+        where: {
+            email: email
+        }
+    }))?.services;
+
+
+    return services;
+};
+
 export const getUserService = async (serviceId: string, index = 0): Promise<any> => {
     if (
         typeof serviceId !== "string"
