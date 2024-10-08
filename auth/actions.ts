@@ -145,7 +145,7 @@ export const getServices = async (): Promise<any> => {
     for (let i = 0; i < res.length; i++) {
         const year = res[i].date.getFullYear().toString();
         const month = res[i].date.getMonth().toString();
-        const day = res[i].date.getDay().toString();
+        const day = res[i].date.getUTCDate().toString();
 
         const date = `${month}/${day}/${year}`;
 
