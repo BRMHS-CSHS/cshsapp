@@ -138,6 +138,7 @@ const UserDash = (): React.ReactElement => {
     }, [sortDescriptor, items]);
 
     const pressDelete = async (e: SyntheticEvent): Promise<void> => {
+        if(!confirm("Are you sure you want to delete this service?")) return;
         const email = e.currentTarget.getAttribute("data-email");
         const res = await deleteUser(email!);
         if (res) alert("Success");

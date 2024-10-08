@@ -68,8 +68,6 @@ export default function Dashboard (): React.ReactElement {
                     <CardBody className="">
                         <Stack divider={<StackDivider />} spacing="10">
                             <div className="space-y-4">
-                                <div className="flex flex-col justify-center items-center">
-                                </div>
                                 <div className="">
                                     <TableContainer>
                                         <Table size="lg">

@@ -136,6 +136,7 @@ const ServicesDashboard = (): React.ReactElement => {
     }, [sortDescriptor, items]);
 
     const pressDelete = async (e: SyntheticEvent): Promise<void> => {
+        if(!confirm("Are you sure you want to delete this service?")) return;
         const id = e.currentTarget.getAttribute("data-m_id");
         const res = await deleteService(id!);
         if (res) alert("Success");
