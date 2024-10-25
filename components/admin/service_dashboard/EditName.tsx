@@ -12,6 +12,7 @@ import {
 import { Plus } from "lucide-react";
 import { FormControl } from "@chakra-ui/react";
 import { changeName_Service } from "@/auth/actions";
+import { toast } from "sonner";
 
 export const EditNameMenu_Services = (props: any): React.ReactElement => {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -24,7 +25,7 @@ export const EditNameMenu_Services = (props: any): React.ReactElement => {
         };
 
         const res = await changeName_Service(data.id, data.name);
-        if (res) alert("Success");
+        if (res) toast.success("Success");
     }
 
     return (

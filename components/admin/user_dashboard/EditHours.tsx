@@ -12,6 +12,7 @@ import {
 import { Plus } from "lucide-react";
 import { FormControl } from "@chakra-ui/react";
 import { changeHours } from "@/auth/actions";
+import { toast } from "sonner";
 
 export const EditHoursMenu = (props: any): React.ReactElement => {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -24,7 +25,7 @@ export const EditHoursMenu = (props: any): React.ReactElement => {
         };
 
         const res = await changeHours(data.email, parseInt(data.hours));
-        if (res) alert("Success");
+        if (res) toast.success("Success");
     }
 
     return (

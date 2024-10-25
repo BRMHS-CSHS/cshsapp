@@ -21,8 +21,8 @@ import {
 import { Button } from "@nextui-org/react";
 import { Link } from "@nextui-org/react";
 import { useSessionData } from "@/lib/auth/useSessionData";
-import { SyntheticEvent, useEffect, useState } from "react";
-import { getUserService, removeService } from "@/auth/actions";
+import { useEffect, useState } from "react";
+import { getUserService } from "@/auth/actions";
 
 type ServiceType = {
     m_id: string
@@ -54,17 +54,38 @@ export default function Dashboard (): React.ReactElement {
         void fetchData();
     }, [User.services]);
 
-    const handleClick = async (e: SyntheticEvent): Promise<void> => {
-        const res = await removeService(User.email!, e.currentTarget.getAttribute("data-m_id")!);
-        if (res) alert("Service Removed");
-    };
-
     return (
         <div className="flex flex-col justify-center items-center">
             <div className="bg-gray-800 outline outline-4 outline-zinc-800 rounded-large p-20 space-y-10 flex">
                 <Card className="space-y-10 flex flex-col items-center">
-                    <CardHeader>
-                        <Heading size="xl" className="font-extrabold text-3xl">Welcome, {User.name}</Heading>
+                    <CardHeader className="flex flex-col space-y-10">
+                        <Text className="flex justify-center font-bold text-medium">
+                            <Highlight
+                                query="Required Number of Hours: 10"
+                                styles={{
+                                    px: "2",
+                                    py: "1",
+                                    rounded: "full",
+                                    bg: (User.hours >= 10) ? "green.100" : "red.100"
+                                }}
+                            >
+                                Required Number of Hours: 10
+                            </Highlight>
+                        </Text>
+                        <Text hidden={User.hours >= 10} className="text-small text-bold">
+                            <Highlight
+                                query="Warning: You have not completed the minimum number of hours."
+                                styles={{
+                                    px: "2",
+                                    py: "1",
+                                    rounded: "full",
+                                    bg: "red.100"
+                                }}
+                            >
+                                Warning: You have not completed the minimum number of hours.
+                            </Highlight>
+                        </Text>
+                        <Heading size="xl" className="font-extrabold text-3xl flex justify-center">Welcome, {User.name}</Heading>
                     </CardHeader>
 
                     <CardBody className="">

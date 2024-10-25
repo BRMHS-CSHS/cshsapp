@@ -44,6 +44,7 @@ import { EditGradeMenu } from "./user_dashboard/EditGrade";
 import { EditHoursMenu } from "./user_dashboard/EditHours";
 import { EditNameMenu } from "./user_dashboard/EditName";
 import { EditServicesMenu } from "./user_dashboard/EditServices";
+import { toast } from "sonner";
 
 const columns = [
     { name: "ID", uid: "id", sortable: true },
@@ -138,10 +139,10 @@ const UserDash = (): React.ReactElement => {
     }, [sortDescriptor, items]);
 
     const pressDelete = async (e: SyntheticEvent): Promise<void> => {
-        if(!confirm("Are you sure you want to delete this service?")) return;
+        if (!confirm("Are you sure you want to delete this service?")) return;
         const email = e.currentTarget.getAttribute("data-email");
         const res = await deleteUser(email!);
-        if (res) alert("Success");
+        if (res) toast.success("Success");
     };
 
     const renderCell = useCallback((user: User, columnKey: React.Key) => {

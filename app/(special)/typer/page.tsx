@@ -3,6 +3,7 @@ import React, { useMemo, useState } from "react";
 import { Text, Input, Highlight } from "@chakra-ui/react";
 import { useSessionData } from "@/lib/auth/useSessionData";
 import { changeHighScore } from "@/auth/actions";
+import { toast } from "sonner";
 
 const Page = (): React.ReactElement => {
     const session = useSessionData();
@@ -70,7 +71,7 @@ const Page = (): React.ReactElement => {
     };
 
     const handleCopy = (): void => {
-        alert("No Copy and Paste!");
+        toast.error("No Copy and Paste!");
     };
 
     return (

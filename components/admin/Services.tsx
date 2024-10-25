@@ -13,6 +13,7 @@ import {
 import { Plus } from "lucide-react";
 import { FormControl } from "@chakra-ui/react";
 import { DatePicker } from "@nextui-org/date-picker";
+import { toast } from "sonner";
 
 export const ServicesMenu = (): React.ReactElement => {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -28,7 +29,7 @@ export const ServicesMenu = (): React.ReactElement => {
         };
         const res = await registerService(data);
 
-        if (res) alert(res);
+        if (res) toast.success(res);
     }
 
     return (

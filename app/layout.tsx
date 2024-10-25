@@ -3,6 +3,7 @@ import { StrictMode } from "react";
 import { ChakraBaseProvider } from "@chakra-ui/react";
 import { NextUIProvider } from "@nextui-org/react";
 import { SessionDataProvider } from "@/components/auth/SessionDataWrapper";
+import { Toaster } from "sonner";
 
 import TanstackQuery from "@/components/providers/TanstackQuery";
 
@@ -45,6 +46,7 @@ export default function RootLayout ({ children }: { children: React.ReactNode })
                             <NextUIProvider>
                                 <ChakraBaseProvider>
                                     <Header />
+                                    <Toaster richColors expand={true} position="top-center" duration={1500} />
                                     <main className="dark container mb-auto sm:mt-32 mt-8 mx-auto">
                                         {children}
                                     </main>

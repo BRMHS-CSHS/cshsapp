@@ -1,5 +1,6 @@
 "use client";
 import { Button, Input, Link } from "@nextui-org/react";
+import { toast } from "sonner";
 
 import {
     FormControl,
@@ -7,10 +8,13 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { loginUser } from "@/auth/actions";
+import { useRouter } from "next/navigation";
 
 export default function Home (): React.ReactElement {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    const router = useRouter();
 
     async function handleClick (): Promise<void> {
         const data = {
@@ -19,7 +23,10 @@ export default function Home (): React.ReactElement {
         };
 
         const res = await loginUser(data);
-        if (res) alert(res);
+        if (res) {
+            toast.success("Success!");
+            router.push("/");
+        } else toast.error("Bad Email or Password.");
     }
 
     return (

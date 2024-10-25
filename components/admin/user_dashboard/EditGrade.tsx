@@ -12,6 +12,7 @@ import {
 import { Plus } from "lucide-react";
 import { FormControl } from "@chakra-ui/react";
 import { changeGrade } from "@/auth/actions";
+import { toast } from "sonner";
 
 export const EditGradeMenu = (props: any): React.ReactElement => {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -24,7 +25,7 @@ export const EditGradeMenu = (props: any): React.ReactElement => {
         };
 
         const res = await changeGrade(data.email, parseInt(data.grade));
-        if (res) alert("Success");
+        if (res) toast.success("Success");
     }
 
     return (

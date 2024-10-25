@@ -1,7 +1,6 @@
 "use client";
 
-import { addService, getServices } from "@/auth/actions";
-import { useSessionData } from "@/lib/auth/useSessionData";
+import { getServices } from "@/auth/actions";
 import {
     Card,
     CardHeader,
@@ -19,7 +18,7 @@ import {
     Td,
     TableContainer
 } from "@chakra-ui/react";
-import { SyntheticEvent, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 // import { useSessionData } from "@/lib/auth/useSessionData";
 
@@ -32,7 +31,6 @@ type ServiceType = {
 };
 
 export default function Dashboard (): React.ReactElement {
-    const session = useSessionData();
     const [services, setServices] = useState<ServiceType[]>();
 
     useMemo((): void => {

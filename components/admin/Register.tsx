@@ -12,6 +12,7 @@ import {
 } from "@nextui-org/react";
 import { Plus } from "lucide-react";
 import { FormControl } from "@chakra-ui/react";
+import { toast } from "sonner";
 
 export const RegisterMenu = (): React.ReactElement => {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -31,7 +32,7 @@ export const RegisterMenu = (): React.ReactElement => {
         };
         const res = await registerUser(data);
 
-        if (res) alert(res);
+        if (res) toast.success(res);
     }
 
     return (

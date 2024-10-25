@@ -42,6 +42,7 @@ import { ServicesMenu } from "@/components/admin/Services";
 import { EditDateMenu } from "./service_dashboard/EditDate";
 import { EditLocationMenu } from "./service_dashboard/EditLocation";
 import { EditNameMenu_Services } from "./service_dashboard/EditName";
+import { toast } from "sonner";
 
 const columns = [
     { name: "ID", uid: "id", sortable: true },
@@ -136,10 +137,10 @@ const ServicesDashboard = (): React.ReactElement => {
     }, [sortDescriptor, items]);
 
     const pressDelete = async (e: SyntheticEvent): Promise<void> => {
-        if(!confirm("Are you sure you want to delete this service?")) return;
+        if (!confirm("Are you sure you want to delete this service?")) return;
         const id = e.currentTarget.getAttribute("data-m_id");
         const res = await deleteService(id!);
-        if (res) alert("Success");
+        if (res) toast.success("Success");
     };
 
     const renderCell = useCallback((user: User, columnKey: React.Key) => {

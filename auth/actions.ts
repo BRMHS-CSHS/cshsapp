@@ -68,7 +68,7 @@ export const registerService = async (credentials: any): Promise<string> => {
 };
 
 export const loginUser: any = async (credentials: any) => {
-    if (!credentials.email || !credentials.password) throw new Error("Invalid Credentials");
+    if (!credentials.email || !credentials.password) return null;
 
     const data = {
         email: credentials.email as string,
@@ -81,13 +81,13 @@ export const loginUser: any = async (credentials: any) => {
         if (error instanceof AuthError) {
             switch (error.type) {
                 case "CredentialsSignin":
-                    return ("Invalid Credentials");
+                    return null;
                 default:
-                    return ("Something went wrong: Bad Username or Password");
+                    return null;
             }
         }
     }
-    redirect("/");
+    return true;
 };
 
 export const logout = async (): Promise<any> => {
@@ -302,7 +302,6 @@ export const getUserServiceIds = async (email: string): Promise<any> => {
             email: email
         }
     }))?.services;
-
 
     return services;
 };

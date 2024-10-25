@@ -6,13 +6,12 @@ import {
     ModalBody,
     ModalFooter,
     Button,
-    useDisclosure,
-    Input
+    useDisclosure
 } from "@nextui-org/react";
 import { Plus } from "lucide-react";
 import { Table, TableContainer, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 import { addService, getServices, getUserServiceIds, removeService } from "@/auth/actions";
-import { isServer } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 type ServiceType = {
     m_id: string
@@ -44,22 +43,22 @@ export const EditServicesMenu = (props: any): React.ReactElement => {
                 };
                 result.push(a);
             });
-            
+
             setServices(result);
         };
         void fetchData();
-    }, []);
+    }, [props.email]);
 
     const handleSignUp = async (e: SyntheticEvent): Promise<void> => {
         const serviceId = e.currentTarget.getAttribute("data-m_id");
         const res = await addService(props.email, serviceId!);
-        if (res) alert("Service Added");
+        if (res) toast.success("Service Added");
     };
 
     const handleRemove = async (e: SyntheticEvent): Promise<void> => {
         const serviceId = e.currentTarget.getAttribute("data-m_id");
         const res = await removeService(props.email, serviceId!);
-        if (res) alert("Service Removed");
+        if (res) toast.success("Service Removed");
     };
 
     return (
@@ -76,40 +75,40 @@ export const EditServicesMenu = (props: any): React.ReactElement => {
                                 Edit Services
                             </ModalHeader>
                             <ModalBody>
-                            <TableContainer>
-                                        <Table size="lg">
-                                            <Thead>
-                                                <Tr>
-                                                    <Th>Service</Th>
-                                                    <Th>Location</Th>
-                                                    <Th>Date</Th>
-                                                </Tr>
-                                            </Thead>
-                                            <Tbody>
-                                                {services?.map(service => {        
-                                                    if (service.isService) {
-                                                        return (
-                                                            <Tr key={service.id}>
-                                                                <Td>{service.name}</Td>
-                                                                <Td>{service.location}</Td>
-                                                                <Td>{service.date}</Td>
-                                                                <Td><Button type="submit" className="max-w-xs" variant="ghost" color="danger" data-m_id={service.m_id} onClick={handleRemove}>Remove</Button></Td>
-                                                            </Tr>
-                                                        );
-                                                    }
-
+                                <TableContainer>
+                                    <Table size="lg">
+                                        <Thead>
+                                            <Tr>
+                                                <Th>Service</Th>
+                                                <Th>Location</Th>
+                                                <Th>Date</Th>
+                                            </Tr>
+                                        </Thead>
+                                        <Tbody>
+                                            {services?.map(service => {
+                                                if (service.isService) {
                                                     return (
                                                         <Tr key={service.id}>
                                                             <Td>{service.name}</Td>
                                                             <Td>{service.location}</Td>
                                                             <Td>{service.date}</Td>
-                                                            <Td><Button type="submit" className="max-w-xs" variant="ghost" color="success" data-m_id={service.m_id} onClick={handleSignUp}>Sign Up</Button></Td>
+                                                            <Td><Button type="submit" className="max-w-xs" variant="ghost" color="danger" data-m_id={service.m_id} onClick={handleRemove}>Remove</Button></Td>
                                                         </Tr>
                                                     );
-                                                })}
-                                            </Tbody>
-                                        </Table>
-                                    </TableContainer>
+                                                }
+
+                                                return (
+                                                    <Tr key={service.id}>
+                                                        <Td>{service.name}</Td>
+                                                        <Td>{service.location}</Td>
+                                                        <Td>{service.date}</Td>
+                                                        <Td><Button type="submit" className="max-w-xs" variant="ghost" color="success" data-m_id={service.m_id} onClick={handleSignUp}>Sign Up</Button></Td>
+                                                    </Tr>
+                                                );
+                                            })}
+                                        </Tbody>
+                                    </Table>
+                                </TableContainer>
                             </ModalBody>
                             <ModalFooter>
                                 <Button color="danger" variant="light" onPress={onClose}>
