@@ -387,8 +387,6 @@ export const getScores = async (): Promise<any> => {
         result[i].id = i + 1;
     }
 
-    console.log(result);
-
     return result;
 };
 
