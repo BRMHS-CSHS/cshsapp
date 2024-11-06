@@ -4,6 +4,7 @@ import { Text, Input, Highlight } from "@chakra-ui/react";
 import { useSessionData } from "@/lib/auth/useSessionData";
 import { changeHighScore } from "@/auth/actions";
 import { toast } from "sonner";
+import { Button, Link } from "@nextui-org/react";
 
 const Page = (): React.ReactElement => {
     const session = useSessionData();
@@ -22,33 +23,6 @@ const Page = (): React.ReactElement => {
     const [start, setStart] = useState(false);
     const [seconds, setSeconds] = useState(30);
 
-    const timeout = setTimeout(() => {
-        const interval = async (): Promise<void> => {
-            if (seconds <= 0) {
-                if (highScore < score) {
-                    setHighScore(score);
-                    await changeHighScore(User.id, score);
-                };
-                setStart(false);
-                changeScore(-1);
-                setCurrentWord("start");
-                setSeconds(30);
-                clearTimeout(timeout);
-                return;
-            }
-            if (start) {
-                /* buggy
-                if (correct) {
-                    setSeconds(() => seconds + 2);
-                    setCorrect(() => false);
-                }
-                */
-                setSeconds(() => seconds - 1);
-            }
-        };
-        void interval();
-    }, 1000);
-
     useMemo((): void => {
         setHighScore(() => User.high_score);
         const fetchData = async (): Promise<void> => {
@@ -58,10 +32,27 @@ const Page = (): React.ReactElement => {
         void fetchData();
     }, [User.high_score]);
 
+    const timeout = setTimeout(async () => {
+        if (start) {
+            setSeconds(() => seconds - 1);
+        }
+        if (seconds <= 0) {
+            if (highScore < score) {
+                setHighScore(score);
+                await changeHighScore(User.id, score);
+            };
+            setStart(false);
+            changeScore(-1);
+            setCurrentWord("start");
+            setSeconds(30);
+            clearTimeout(timeout);
+            return;
+        }
+    }, 1000);
+
     const handleChange = (e: any): void => {
         changeCurText(() => e.target.value);
         if (curText == currentWord) {
-            // setCorrect(() => true);
             setStart(true);
             changeScore(score + 1);
             changeCWord(Math.floor(Math.random() * words.length));
@@ -76,6 +67,9 @@ const Page = (): React.ReactElement => {
 
     return (
         <main className="flex flex-col justify-center items-center space-y-4">
+            <Link href="/typer/leaderboard" className="flex py-4">
+                <Button variant="ghost" color="primary">Leaderboard</Button>
+            </Link>
             <div className="font-bold text-3xl flex flex-col items-center space-y-6">
                 <div>
                     <Text> High Score: {highScore} </Text>

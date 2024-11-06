@@ -139,7 +139,7 @@ export default function Dashboard (): React.ReactElement {
                                     <TableContainer>
                                         <Table size="lg">
                                             <Thead>
-                                                <Tr>
+                                                <Tr className="flex flex-row justify-center items-center space-x-10">
                                                     <Th>Service</Th>
                                                     <Th>Location</Th>
                                                     <Th>Date</Th>
@@ -148,7 +148,7 @@ export default function Dashboard (): React.ReactElement {
                                             <Tbody>
                                                 {services?.map(service => {
                                                     return (
-                                                        <Tr key={service.id}>
+                                                        <Tr key={service.id} className="flex flex-row justify-center items-center space-x-10">
                                                             <Td>{service.name}</Td>
                                                             <Td>{service.location}</Td>
                                                             <Td>{service.date}</Td>

@@ -357,6 +357,38 @@ export const changeHighScore = async (userId: string | undefined, high_score: nu
     return res;
 };
 
+export const getScores = async (): Promise<any> => {
+    const users = await db.user.findMany({
+        where: { role: "User" }
+    });
+
+    let temp = {
+        id: 0,
+        name: "",
+        score: 0
+    };
+
+    const result: Array<typeof temp> = [];
+    for (let i = 1; i < users.length + 1; i++) {
+        temp.id = i;
+        temp.name = users[i - 1].name;
+        temp.score = users[i - 1].high_score;
+        if (temp.score <= 0) continue;
+        result.push(temp);
+        temp = {
+            id: 0,
+            name: "",
+            score: 0
+        };
+    }
+
+    result.sort();
+
+    console.log(result);
+
+    return result;
+};
+
 // administrator methods
 
 export const deleteUser = async (email: string): Promise<any> => {

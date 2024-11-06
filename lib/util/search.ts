@@ -20,6 +20,11 @@ export const wikiPages: SearchItem[] = [
         name: "Typer",
         url: "/typer",
         description: "The Typer Game."
+    },
+    {
+        name: "Leaderboard",
+        url: "/typer/leaderboard",
+        description: "The Typer Leaderboard."
     }
 ];
 
