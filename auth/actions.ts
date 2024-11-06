@@ -370,7 +370,6 @@ export const getScores = async (): Promise<any> => {
 
     const result: Array<typeof temp> = [];
     for (let i = 1; i < users.length + 1; i++) {
-        temp.id = i;
         temp.name = users[i - 1].name;
         temp.score = users[i - 1].high_score;
         if (temp.score <= 0) continue;
@@ -382,9 +381,43 @@ export const getScores = async (): Promise<any> => {
         };
     }
 
-    result.sort();
+    result.sort((a: typeof temp, b: typeof temp) => b.score - a.score);
+
+    for (let i = 0; i < result.length; i++) {
+        result[i].id = i + 1;
+    }
 
     console.log(result);
+
+    return result;
+};
+
+export const getHours = async (): Promise<any> => {
+    const users = await db.user.findMany({
+        where: { role: "User" }
+    });
+
+    let temp = {
+        id: 0,
+        name: "",
+        hours: 0
+    };
+
+    const result: Array<typeof temp> = [];
+    for (let i = 1; i < users.length + 1; i++) {
+        temp.id = i;
+        temp.name = users[i - 1].name;
+        temp.hours = users[i - 1].hours;
+        if (temp.hours <= 0) continue;
+        result.push(temp);
+        temp = {
+            id: 0,
+            name: "",
+            hours: 0
+        };
+    }
+
+    result.sort((a: typeof temp, b: typeof temp) => a.hours - b.hours);
 
     return result;
 };

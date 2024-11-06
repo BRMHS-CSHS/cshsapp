@@ -23,6 +23,33 @@ const Page = (): React.ReactElement => {
     const [start, setStart] = useState(false);
     const [seconds, setSeconds] = useState(30);
 
+    const timeout = setTimeout(() => {
+        const interval = async (): Promise<void> => {
+            if (seconds <= 0) {
+                if (highScore < score) {
+                    setHighScore(score);
+                    await changeHighScore(User.id, score);
+                };
+                setStart(false);
+                changeScore(-1);
+                setCurrentWord("start");
+                setSeconds(30);
+                clearTimeout(timeout);
+                return;
+            }
+            if (start) {
+                /* buggy
+                if (correct) {
+                    setSeconds(() => seconds + 2);
+                    setCorrect(() => false);
+                }
+                */
+                setSeconds(() => seconds - 1);
+            }
+        };
+        void interval();
+    }, 1000);
+
     useMemo((): void => {
         setHighScore(() => User.high_score);
         const fetchData = async (): Promise<void> => {
@@ -32,27 +59,10 @@ const Page = (): React.ReactElement => {
         void fetchData();
     }, [User.high_score]);
 
-    const timeout = setTimeout(async () => {
-        if (start) {
-            setSeconds(() => seconds - 1);
-        }
-        if (seconds <= 0) {
-            if (highScore < score) {
-                setHighScore(score);
-                await changeHighScore(User.id, score);
-            };
-            setStart(false);
-            changeScore(-1);
-            setCurrentWord("start");
-            setSeconds(30);
-            clearTimeout(timeout);
-            return;
-        }
-    }, 1000);
-
     const handleChange = (e: any): void => {
         changeCurText(() => e.target.value);
         if (curText == currentWord) {
+            // setCorrect(() => true);
             setStart(true);
             changeScore(score + 1);
             changeCWord(Math.floor(Math.random() * words.length));
