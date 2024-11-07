@@ -4,7 +4,7 @@ import { Text, Input, Highlight } from "@chakra-ui/react";
 import { useSessionData } from "@/lib/auth/useSessionData";
 import { changeHighScore, getUserScore } from "@/auth/actions";
 import { toast } from "sonner";
-import { Button, Link } from "@nextui-org/react";
+import { Button, Link, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@nextui-org/react";
 
 const Page = (): React.ReactElement => {
     const session = useSessionData();
@@ -14,6 +14,7 @@ const Page = (): React.ReactElement => {
         high_score: (session.data?.user as any)?.high_score
     };
 
+    const { isOpen, onOpenChange } = useDisclosure();
     const [curText, changeCurText] = useState("");
     const [cword, changeCWord] = useState(0);
     const [score, changeScore] = useState(-1);
@@ -21,13 +22,13 @@ const Page = (): React.ReactElement => {
     const [words, setWords] = useState([]);
     const [currentWord, setCurrentWord] = useState("start");
     const [start, setStart] = useState(false);
+    const [hideHighScore, setHideHighScore] = useState(true);
     const [seconds, setSeconds] = useState(30);
 
     useEffect((): void => {
         const fetchData = async (): Promise<void> => {
             const result = await (await fetch("https://random-word-api.vercel.app/api?words=500")).json();
             setWords(result);
-            setHighScore(await getUserScore(User.id!));
         };
         void fetchData();
     }, [User.id]);
@@ -74,14 +75,44 @@ const Page = (): React.ReactElement => {
         toast.error("No Copy and Paste!");
     };
 
+    const handleClick = async (): Promise<void> => {
+        setHighScore(await getUserScore(User.id!));
+        setHideHighScore(false);
+    };
+
     return (
         <main className="flex flex-col justify-center items-center space-y-4">
+            <>
+                <Modal isOpen={!isOpen} onOpenChange={onOpenChange}>
+                    <ModalContent>
+                        {onClose => (
+                            <>
+                                <ModalHeader className="flex flex-col gap-1">
+                                    Typer
+                                </ModalHeader>
+                                <ModalBody>
+                                    <Text> Type the above words <span className="font-bold">as fast as possible.</span> </Text>
+                                    <Text> Type <span className="font-bold">"start"</span> to begin. </Text>
+                                    <Text> Press <span className="font-bold">Space</span> to submit a word. </Text>
+                                    <Text> Press <span className="font-bold">Begin</span> to see your high score. </Text>
+                                </ModalBody>
+                                <ModalFooter>
+                                    <Button color="primary" variant="ghost" onPress={onClose} onClick={handleClick}>
+                                        Begin
+                                    </Button>
+                                </ModalFooter>
+                            </>
+                        )}
+                    </ModalContent>
+                </Modal>
+            </>
+
             <Link href="/typer/leaderboard" className="flex py-4">
                 <Button variant="ghost" color="primary">Leaderboard</Button>
             </Link>
             <div className="font-bold text-3xl flex flex-col items-center space-y-6">
                 <div>
-                    <Text> High Score: {highScore} </Text>
+                    <Text hidden={hideHighScore}> High Score: {highScore} </Text>
                     <Text> Score: {score} </Text>
                     <Text> Time: {seconds} </Text>
                 </div>
@@ -100,11 +131,11 @@ const Page = (): React.ReactElement => {
                 </Text>
             </div>
             <Input htmlSize={20} className="font-semibold text-xl rounded-full text-center" onChange={handleChange} />
-            <div className="flex flex-col justify-center items-center font-semibold text-xl">
+            {/* <div className="flex flex-col justify-center items-center font-semibold text-xl">
                 <Text> Type the above word as fast as possible. </Text>
                 <Text> Type "start" to begin. </Text>
                 <Text> Press Space to submit a word. </Text>
-            </div>
+            </div> */}
         </main>
     );
 };
