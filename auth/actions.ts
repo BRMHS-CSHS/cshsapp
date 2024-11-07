@@ -334,7 +334,7 @@ export const getUserService = async (serviceId: string, index = 0): Promise<any>
     return result;
 };
 
-export const changeHighScore = async (userId: string | undefined, high_score: number): Promise<any> => {
+export const changeHighScore = async (userId: string | undefined, high_score: number): Promise<boolean> => {
     if (
         typeof high_score !== "number"
     ) throw new Error("Something went wrong!");
@@ -342,7 +342,15 @@ export const changeHighScore = async (userId: string | undefined, high_score: nu
     if (
         !userId
         || typeof userId !== "string"
-    ) return;
+    ) return false;
+
+    const user = await db.user.findFirst({
+        where: {
+            id: userId
+        }
+    });
+
+    if (high_score < user?.high_score!) return false;
 
     const res = await db.user.update({
         where: {
@@ -354,7 +362,8 @@ export const changeHighScore = async (userId: string | undefined, high_score: nu
     });
 
     revalidatePath("/typer");
-    return res;
+    if (res) return true;
+    return false;
 };
 
 export const getScores = async (): Promise<any> => {
@@ -388,6 +397,15 @@ export const getScores = async (): Promise<any> => {
     }
 
     return result;
+};
+
+export const getUserScore = async (userId: string): Promise<number> => {
+    const user = await db.user.findFirst({
+        where: { id: userId }
+    });
+
+    if (user) return user.high_score;
+    return 0;
 };
 
 export const getHours = async (): Promise<any> => {

@@ -2,7 +2,7 @@
 import React, { useMemo, useState } from "react";
 import { Text, Input, Highlight } from "@chakra-ui/react";
 import { useSessionData } from "@/lib/auth/useSessionData";
-import { changeHighScore } from "@/auth/actions";
+import { changeHighScore, getUserScore } from "@/auth/actions";
 import { toast } from "sonner";
 import { Button, Link } from "@nextui-org/react";
 
@@ -23,12 +23,20 @@ const Page = (): React.ReactElement => {
     const [start, setStart] = useState(false);
     const [seconds, setSeconds] = useState(30);
 
+    useMemo((): void => {
+        const fetchData = async (): Promise<void> => {
+            const result = await (await fetch("https://random-word-api.vercel.app/api?words=500")).json();
+            setWords(result);
+            setHighScore(await getUserScore(User.id!));
+        };
+        void fetchData();
+    }, [User.id]);
+
     const timeout = setTimeout(() => {
         const interval = async (): Promise<void> => {
             if (seconds <= 0) {
                 if (highScore < score) {
-                    setHighScore(score);
-                    await changeHighScore(User.id, score);
+                    if (await changeHighScore(User.id, score)) setHighScore(score);
                 };
                 setStart(false);
                 changeScore(-1);
@@ -49,15 +57,6 @@ const Page = (): React.ReactElement => {
         };
         void interval();
     }, 1000);
-
-    useMemo((): void => {
-        setHighScore(() => User.high_score);
-        const fetchData = async (): Promise<void> => {
-            const result = await (await fetch("https://random-word-api.vercel.app/api?words=500")).json();
-            setWords(result);
-        };
-        void fetchData();
-    }, [User.high_score]);
 
     const handleChange = (e: any): void => {
         changeCurText(() => e.target.value);
