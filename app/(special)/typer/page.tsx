@@ -83,7 +83,7 @@ const Page = (): React.ReactElement => {
     return (
         <main className="flex flex-col justify-center items-center space-y-4">
             <>
-                <Modal isOpen={!isOpen} onOpenChange={onOpenChange}>
+                <Modal isOpen={!isOpen} onOpenChange={onOpenChange} backdrop="blur" isDismissable={false} isKeyboardDismissDisabled={false} hideCloseButton>
                     <ModalContent>
                         {onClose => (
                             <>
