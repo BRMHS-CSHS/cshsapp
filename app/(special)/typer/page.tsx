@@ -1,5 +1,5 @@
 "use client";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Text, Input, Highlight } from "@chakra-ui/react";
 import { useSessionData } from "@/lib/auth/useSessionData";
 import { changeHighScore, getUserScore } from "@/auth/actions";
@@ -23,7 +23,7 @@ const Page = (): React.ReactElement => {
     const [start, setStart] = useState(false);
     const [seconds, setSeconds] = useState(30);
 
-    useMemo((): void => {
+    useEffect((): void => {
         const fetchData = async (): Promise<void> => {
             const result = await (await fetch("https://random-word-api.vercel.app/api?words=500")).json();
             setWords(result);
