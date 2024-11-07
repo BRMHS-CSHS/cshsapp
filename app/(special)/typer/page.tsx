@@ -76,7 +76,7 @@ const Page = (): React.ReactElement => {
     };
 
     const handleClick = async (): Promise<void> => {
-        setHighScore(await getUserScore(User.id!));
+        if (User.id) setHighScore(await getUserScore(User.id));
         setHideHighScore(false);
     };
 
