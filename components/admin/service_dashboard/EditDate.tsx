@@ -43,7 +43,7 @@ export const EditDateMenu = (props: any): React.ReactElement => {
                             </ModalHeader>
                             <ModalBody>
                                 <FormControl className="space-y-2">
-                                    <DatePicker label="Date" className="max-w-xs" onChange={e => setDate(new Date(e.year, e.month, e.day))} />
+                                    <DatePicker label="Date" className="max-w-xs" onChange={e => setDate(new Date(e.year, e.month - 1, e.day))} />
                                 </FormControl>
                             </ModalBody>
                             <ModalFooter>
